@@ -13,4 +13,6 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
   spec.files         = `git ls-files`.split($/)
   spec.require_paths = ["lib","tasks"]
+
+  spec.add_runtime_dependency "rake", "~> 10"
 end
