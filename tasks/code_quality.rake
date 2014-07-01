@@ -27,7 +27,7 @@ namespace :code_quality do
     grep_for_console_log %w{app/assets/javascripts }
   end
 
-  desc 'check for Time.now'
+  desc 'check for Time.now should use Time.zone.now'
   task :time_check do
     grep_for_time_now %w{app lib}
   end
