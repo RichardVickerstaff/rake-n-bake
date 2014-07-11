@@ -18,7 +18,5 @@ You can then call them like you would any other rake task.
 
 ToDo
 ----
-1. Namespace all PoolNet rake tasks
-2. Add a list of all the rake tasks to the Readme
+1. Add a list of all the rake tasks to the Readme
 2. Add a cucumber rake task
-3. Add a code coverage rake task
