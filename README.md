@@ -1,4 +1,4 @@
-PoolNet
+RakeRack
 ========
 
 Common rake tasks I use a lot
@@ -9,11 +9,11 @@ They have been extracted into a gem to allow them to easily be reused.
 
 Installation
 ------------
-* Install the gem or add `gem "pool_net"` to your Gemfile.
+* Install the gem or add `gem "rake_rack"` to your Gemfile.
 
 Usage
 -----
-PoolNet is made up of many rake tasks, add `require "pool_net"` to the top of your default.rake file to gain access to them.
+PoolNet is made up of many rake tasks, add `require "rake_rack"` to the top of your default.rake file to gain access to them.
 You can then call them like you would any other rake task.
 
 ToDo

@@ -1,4 +1,4 @@
-namespace :pool_net do
+namespace :rake_rack do
   task :ok do
     red    = "\e[31m"
     yellow = "\e[33m"
