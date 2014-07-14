@@ -5,7 +5,7 @@ begin
     t.verbose = false
   end
 
-   - Formerly known as pool_netRSpec::Core::RakeTask.new(:"rake_rack:rspec_test_prepare" => :"test:prepare") do |t|
+  RSpec::Core::RakeTask.new(:"rake_rack:rspec_test_prepare" => :"test:prepare") do |t|
     t.verbose = false
   end
 rescue LoadError
