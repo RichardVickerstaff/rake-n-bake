@@ -1,3 +1,5 @@
+== 0.0.4 (16 July 2014)
+
 == 0.0.3 (14 July 2014)
 
 * Introduce history file
