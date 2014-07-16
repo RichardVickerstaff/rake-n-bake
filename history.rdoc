@@ -1,3 +1,6 @@
+* Extract version logic into a class
+* Allow all tags to push to RubyGems
+
 == 0.0.5 (16 July 2014)
 
 * Change version tack so it can update gem version
