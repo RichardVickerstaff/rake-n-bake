@@ -1,6 +1,7 @@
 RakeRack
 ========
 [![Build Status](https://travis-ci.org/RichardVickerstaff/rake_rack.svg?branch=master)](https://travis-ci.org/RichardVickerstaff/rake_rack)
+[![Gem Version](https://badge.fury.io/rb/rake_rack.svg)](http://badge.fury.io/rb/rake_rack)
 Common rake tasks I use a lot
 -----------------------------------------
 
