@@ -1,4 +1,8 @@
+* Change version tack so it can update gem version
+
 == 0.0.4 (16 July 2014)
+
+* Allow Travis to push gem on tag
 
 == 0.0.3 (14 July 2014)
 

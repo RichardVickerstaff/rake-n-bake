@@ -14,6 +14,7 @@ module Rake::Version
 
   def self.update_to version
     add_history_header version
+    update_gem version if gem?
     commit version
     tag version
     branch = `git symbolic-ref HEAD`[%r{.*/(.*)}, 1]
@@ -30,14 +31,26 @@ module Rake::Version
     puts "Added version to history.rdoc"
   end
 
+  def self.update_gem version
+    path = Dir.glob('*.gemspec').first
+    text = File.read path
+    File.open(path, "w") do |file|
+      file.puts text.sub(/(.*version\s*=\s*)(['|"].*['|"])/, "\\1'#{version}'")
+    end
+  end
+
   def self.commit version
-    `git commit history.rdoc -m'increment version to #{version}'`
+    `git add . && git commit -m 'increment version to #{version}'`
     puts "Committed change"
   end
 
   def self.tag version
     `git tag #{version}`
     puts "Tagged with #{version}"
+  end
+
+  def self.gem?
+    !Dir.glob('*.gemspec').empty?
   end
 end
 
