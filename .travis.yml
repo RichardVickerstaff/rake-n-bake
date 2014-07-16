@@ -6,3 +6,10 @@ rvm:
   - rbx-2
   - ruby-head
   - jruby-head
+deploy:
+  provider: rubygems
+  api_key:
+    secure: "V7ykC2I7kVAvyfI97v8sFPrnewaWGRD6FtWqRGIhb2+BflzxRKydT7dk4nIB85z39YqV5Aq0IOrZSXdVKCN1UJn6kGg69JpTdvK8D5wNWYwFyY0/Y2zcqqVn2rNSYew7G3aSfLQqAipHEKzDB3y33ntdk3QFWYPitC1WbYzmfRE="
+  gem: rake_rack
+  on:
+    tags: true
