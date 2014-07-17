@@ -1,6 +1,6 @@
 require 'simplecov'
-require 'pry-byebug'
 require 'timecop'
+require 'tempfile'
 
 
 SimpleCov.start do
