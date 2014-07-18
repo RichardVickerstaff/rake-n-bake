@@ -19,6 +19,21 @@ You can then call them like you would any other rake task.
 
 All tasks are namespaced with `:rake_rack` to prevent clashing with other tasks
 
+### :code_quality
+#### :all
+Runs `[:trailing_spaces, :shoulds, :debugger, :pry, :console_log]` tasks. It does not run `:time_check`
+##### :trailing_spaces
+Check for trailing spaces in `[spec, features, lib, app, factories, db]`.
+##### :shoulds
+Check for legacy 'it "should blah"' style specs
+##### :debugger
+Check for debugger statements in `[lib, app, spec, features]`.
+##### :pry
+Check for binding.pry statements in `[lib, app, spec, features]`.
+##### :console_log
+Check for console.log statements in `app/assets/javascripys`.
+
+
 ToDo
 ----
 1. Add a list of all the rake tasks to the Readme
