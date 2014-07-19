@@ -33,6 +33,12 @@ Check for binding.pry statements in `[lib, app, spec, features]`.
 ##### :console_log
 Check for console.log statements in `app/assets/javascripys`.
 
+### :coverage
+#### :check_specs
+Look at SimpleCov results for spec coverage in `log/coverage/spec` and fail the build if not 100%
+#### :check_cucumber
+Look at SimpleCov results for Cucumber coverage in `log/coverage/features` and fail the build if not 100%
+
 
 ToDo
 ----
