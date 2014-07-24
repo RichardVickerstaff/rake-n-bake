@@ -1,7 +1,7 @@
 namespace :rake_rack do
   namespace :code_quality do
     desc 'Runs all code quality checks'
-    task :all => [:trailing_spaces, :shoulds, :debugger, :pry, :console_log, :time_check]
+    task :all => [:trailing_spaces, :shoulds, :debugger, :pry, :console_log]
 
     desc 'check for trailing spaces'
     task :trailing_spaces do
