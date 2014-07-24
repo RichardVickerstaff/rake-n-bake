@@ -7,12 +7,27 @@ describe RakeRack::Version do
   end
 
   describe '.current_history' do
-    before do
-      allow(File).to receive(:read).and_return 'history'
+    let(:tmp_file) { Tempfile.new(['history','.rdoc']) }
+
+    context 'when there is a history file' do
+      before do
+        allow(File).to receive(:read).and_return 'history'
+        allow(File).to receive(:exists?).and_return true
+      end
+
+      it 'returns the current history file' do
+        expect(described_class.current_history(tmp_file.path)).to eq 'history'
+      end
     end
 
-    it 'returns the current history file' do
-      expect(described_class.current_history('./path')).to eq 'history'
+    context 'when there is no history file' do
+      before do
+        allow(File).to receive(:exists?).and_return false
+      end
+
+      it 'creates a history file at version 0.0.0' do
+        expect(described_class.current_history(tmp_file.path)).to match(/\= 0.0.0 /)
+      end
     end
   end
 

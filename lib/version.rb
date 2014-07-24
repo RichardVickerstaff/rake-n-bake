@@ -2,6 +2,11 @@ class RakeRack
   class Version
     HISTORY_FILE = "history.rdoc"
     def self.current_history history_file
+      unless File.exists? history_file
+         File.open history_file, "w" do |f|
+           f.puts "== 0.0.0 (#{Time.now.strftime "%d %B %Y"})"
+         end
+      end
       File.read history_file
     end
 
