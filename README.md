@@ -42,6 +42,8 @@ Look at SimpleCov results for spec coverage in `log/coverage/spec` and fail the 
 #### :check_cucumber
 Look at SimpleCov results for Cucumber coverage in `log/coverage/features` and fail the build if not 100%
 
+### :ok
+Run this task last to print `***** ALL TESTS PASSED *****` showing you rake has passed.
 
 ToDo
 ----
