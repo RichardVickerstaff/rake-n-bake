@@ -32,6 +32,9 @@ Check for debugger statements in `[lib, app, spec, features]`.
 Check for binding.pry statements in `[lib, app, spec, features]`.
 ##### :console_log
 Check for console.log statements in `app/assets/javascripys`.
+##### :time_check
+Check for `Time.now` statements in `[lib, app]` (Time.zone.now is more reliable for servers wanting to use UTC).
+This check is NOT part of :all as `Time.zone.now` is an ActiveSupport method.
 
 ### :coverage
 #### :check_specs
