@@ -5,7 +5,7 @@ RakeRack
 Common rake tasks I use a lot
 -----------------------------------------
 
-PoolNet is a collection of rake tasks myself and other commanly use on our projects.
+RakeRack is a collection of rake tasks myself and other commanly use on our projects.
 They have been extracted into a gem to allow them to easily be reused.
 
 Installation
