@@ -1,3 +1,7 @@
+== 0.1.2 (20 August 2014)
+
+* Suppress grep errors if no folder
+
 == 0.1.1 (24 July 2014)
 
 == 0.1.0 (18 July 2014)
