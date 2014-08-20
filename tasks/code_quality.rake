@@ -73,7 +73,7 @@ namespace :rake_rack do
 
     def grep regex, file_patterns, error_message, exclude_patterns=[], perl_regex=false
       files_found = ""
-      command = "grep -r -n --binary-files=without-match '#{regex}' #{file_patterns.join(' ')}"
+      command = "grep -r -n -s --binary-files=without-match '#{regex}' #{file_patterns.join(' ')}"
       exclude_patterns.each do |exclude_pattern|
         command << " --exclude '#{exclude_pattern}'"
       end
