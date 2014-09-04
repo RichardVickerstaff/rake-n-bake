@@ -16,4 +16,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "rake", "~> 10"
   spec.add_runtime_dependency "rspec", "~> 3.0"
+  spec.add_runtime_dependency "term-ansicolor", "~> 1.3"
 end

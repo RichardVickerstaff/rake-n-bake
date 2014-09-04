@@ -1,12 +1,23 @@
 namespace :rake_rack do
+  require 'term/ansicolor'
+  include Term::ANSIColor
+
   task :ok do
-    red    = "\e[31m"
-    yellow = "\e[33m"
-    green  = "\e[32m"
-    blue   = "\e[34m"
-    purple = "\e[35m"
-    bold   = "\e[1m"
-    normal = "\e[0m"
-    puts "", "#{bold}#{red}*#{yellow}*#{green}*#{blue}*#{purple}*#{green} ALL TESTS PASSED #{purple}*#{blue}*#{green}*#{yellow}*#{red}*#{normal}"
+    puts
+    print [
+      "*".bold.red,
+      "*".bold.yellow,
+      "*".bold.green,
+      "*".bold.blue,
+      "*".bold.magenta,
+      " ALL TESTS PASSED ".bold.green,
+      "*".bold.magenta,
+      "*".bold.blue,
+      "*".bold.green,
+      "*".bold.yellow,
+      "*".bold.red,
+    ].join
+    puts
   end
+
 end
