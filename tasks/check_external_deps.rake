@@ -1,12 +1,11 @@
 namespace :rake_rack do
-  task :check_external_deps, [:exes] do |task, args|
+  task :check_external_dependencies do
     puts 'Checking external dependencies...'
     green = `tput setaf 2`
     red = `tput setaf 1`
     reset = `tput sgr0`
 
-    external_commands = args[:exes]
-    results = external_commands.each_with_object({}) do |exe, status|
+    results = Array(@external_dependencies).each_with_object({}) do |exe, status|
         system "which #{exe} > /dev/null"
         status[exe] = if($? == 0)
           print "#{green}.#{reset}"
