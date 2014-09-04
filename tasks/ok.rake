@@ -20,4 +20,15 @@ namespace :rake_rack do
     puts
   end
 
+  task :ok_rainbow do
+    puts
+    print "  ",           "   ",           "    ",            "                  ".on_red,      "    ",            "   ",           "  ",           "\n"
+    print "  ",           "   ",           "    ".on_red,     "                  ".on_yellow,   "    ".on_red,     "   ",           "  ",           "\n"
+    print "  ",           "   ".on_red,    "    ".on_yellow,  "                  ".on_green,    "    ".on_yellow,  "   ".on_red,    "  ",           "\n"
+    print "  ".on_red,    "   ".on_yellow, "    ".on_green,   "                  ".on_blue,     "    ".on_green,   "   ".on_yellow, "  ".on_red,    "\n"
+    print "  ".on_yellow, "   ".on_green,  "    ".on_blue,    "                  ".on_magenta,  "    ".on_blue,    "   ".on_green,  "  ".on_yellow, "\n"
+    print "  ".on_green,  "   ".on_blue,   "    ".on_magenta, "                  ".green,       "    ".on_magenta, "   ".on_blue,   "  ".on_green,  "\n"
+    print " ".on_green,   "  ".on_blue,    "   ".on_magenta,  "    ALL TESTS PASSED    ".green, "   ".on_magenta,  "  ".on_blue,    " ".on_green,   "\n"
+    puts
+  end
 end

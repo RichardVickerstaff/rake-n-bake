@@ -52,6 +52,10 @@ Look at SimpleCov results for Cucumber coverage in `log/coverage/features` and f
 ### :ok
 Run this task last to print `***** ALL TESTS PASSED *****` showing you rake has passed.
 
+### :ok_rainbow
+Run this task last to print a more magical version of the 'ALL TESTS PASSED' message
+
+
 ToDo
 ----
 1. Add a list of all the rake tasks to the Readme
