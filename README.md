@@ -19,6 +19,13 @@ You can then call them like you would any other rake task.
 
 All tasks are namespaced with `:rake_rack` to prevent clashing with other tasks
 
+### :check_external_dependencies
+Check that each command in the `@external_dependencies` array is present on the system path (and fails the task if it isn't)
+For example:
+```ruby
+@external_dependencies = ['ruby', 'postgres', 'foo']
+```
+
 ### :code_quality
 #### :all
 Runs `[:trailing_spaces, :shoulds, :debugger, :pry, :console_log]` tasks. It does not run `:time_check`
