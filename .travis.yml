@@ -1,15 +1,15 @@
 language: ruby
 rvm:
-  - 2.1.0
-  - 2.0.0
-  - 1.9.3
-  - ruby-head
-  - jruby-1.7.12
+- 2.1.0
+- 2.0.0
+- 1.9.3
+- ruby-head
+- jruby-1.7.12
 deploy:
   provider: rubygems
   api_key:
-    secure: "V7ykC2I7kVAvyfI97v8sFPrnewaWGRD6FtWqRGIhb2+BflzxRKydT7dk4nIB85z39YqV5Aq0IOrZSXdVKCN1UJn6kGg69JpTdvK8D5wNWYwFyY0/Y2zcqqVn2rNSYew7G3aSfLQqAipHEKzDB3y33ntdk3QFWYPitC1WbYzmfRE="
+    secure: RmGYn4yb1PPjZxdWxgwUWTENnRaqp/PXUMfieJoAE0Dw1JrwkjxI3qhy/I6p36KusLsrFxrh4UdATj78QsWdtZVLJ9tvjONOsrAUjIszBwRmOXDWRkH8eLGCCmIYfYMZaRYvlQhPR2t5CC6BwfHS6W1AU5YtU5SSpk0HT+SRzII=
   gem: rake_rack
   on:
     tags: true
-    all_branches: true
+    repo: RichardVickerstaff/rake_rack
