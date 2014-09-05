@@ -13,3 +13,4 @@ deploy:
   on:
     tags: true
     repo: RichardVickerstaff/rake_rack
+    all_branches: true
