@@ -1,3 +1,5 @@
+* Remove broken Karma task
+
 == 0.2.1 (05 September 2014)
 
 * Change the way colours are used on term

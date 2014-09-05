@@ -58,5 +58,4 @@ Run this task last to print a more magical version of the 'ALL TESTS PASSED' mes
 
 ToDo
 ----
-1. Add a list of all the rake tasks to the Readme
-2. Add a cucumber rake task
+1. Add a cucumber rake task
