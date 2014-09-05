@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "rake_rack"
-  spec.version       = '1.0.0'
+  spec.version       = '1.0.1'
   spec.authors       = ["Richard Vickerstaff"]
   spec.email         = ["m3akq@btinternet.com"]
   spec.description   = "A set of rake tasks I commonly use - Formerly known as pool_net"
