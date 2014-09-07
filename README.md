@@ -1,30 +1,41 @@
 RakeRack
 ========
+
+Commonly used Rake tasks
+------------------------
+...collected together and given a new coat of paint (and nothing to do with [Rack](http://rack.github.io/))
+
+
 [![Build Status](https://travis-ci.org/RichardVickerstaff/rake_rack.svg?branch=master)](https://travis-ci.org/RichardVickerstaff/rake_rack)
 [![Gem Version](https://badge.fury.io/rb/rake_rack.svg)](http://badge.fury.io/rb/rake_rack)
-Common rake tasks I use a lot
------------------------------------------
 
-RakeRack is a collection of rake tasks myself and other commanly use on our projects.
-They have been extracted into a gem to allow them to easily be reused.
+RakeRack is a collection of widely applicable Rake tasks used on many projects.
+They have been extracted into a gem to allow them to easily be reused and maintained.
+
+RakeRack tasks are used on the project itself, so you can always take a peek at our [Rakefile](https://github.com/RichardVickerstaff/rake_rack/blob/master/Rakefile) or the [tasks themselves](https://github.com/RichardVickerstaff/rake_rack/tree/master/tasks) to work out what is going on
 
 Installation
 ------------
-* Install the gem or add `gem "rake_rack"` to your Gemfile.
+Install the gem or add `gem "rake_rack"` to your Gemfile.
 
 Usage
 -----
-RakeRack is made up of many rake tasks, add `require "rake_rack"` to the top of your default.rake file to gain access to them.
-You can then call them like you would any other rake task.
+    1. Add `require "rake_rack"` to your Rakefile
+    2. Call the tasks that you want, in with your usual Rake tasks.
 
-All tasks are namespaced with `:rake_rack` to prevent clashing with other tasks
+Tasks are namespaced under `:rake_rack` to prevent clashes.
+For example, this means the `:ok` task is called by invoking `:rake_rack:ok`
+
+Tasks
+-----
 
 ### :check_external_dependencies
 Check that each command in the `@external_dependencies` array is present on the system path (and fails the task if it isn't)
 For example:
-```ruby
-@external_dependencies = ['ruby', 'postgres', 'foo']
-```
+  ```ruby
+  @external_dependencies = ['ruby', 'postgres', 'foo']
+  ```
+You can also use the underlying checker object by creating an instance of `RakeRack::DependencyChecker` with your array of dependencies and calling `#check` or `#missing` on it.
 
 ### :code_quality
 #### :all
@@ -50,12 +61,13 @@ Look at SimpleCov results for spec coverage in `log/coverage/spec` and fail the 
 Look at SimpleCov results for Cucumber coverage in `log/coverage/features` and fail the build if not 100%
 
 ### :ok
-Run this task last to print `***** ALL TESTS PASSED *****` showing you rake has passed.
+Useful at the end of any Rake tasks which test your application, it prints `***** ALL TESTS PASSED *****`.
 
 ### :ok_rainbow
-Run this task last to print a more magical version of the 'ALL TESTS PASSED' message
+Run this task last to print a more magical version of `:ok`
 
-
-ToDo
-----
-1. Add a cucumber rake task
+Contributing
+------------
+  1. Make a fork
+  2. Make and push your changes to your fork
+  3. Create a Pull Reques
