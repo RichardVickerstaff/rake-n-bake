@@ -1,7 +1,7 @@
 require 'rake/clean'
 require './lib/rake_rack'
 
-@external_dependencies = %w[ruby rake tput]
+@external_dependencies = %w[ruby rake]
 
 task :default => [
   :clean,

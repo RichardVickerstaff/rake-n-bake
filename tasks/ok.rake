@@ -1,5 +1,6 @@
+require 'term/ansicolor'
+
 namespace :rake_rack do
-  require 'term/ansicolor'
   include Term::ANSIColor
 
   task :ok do
