@@ -3,12 +3,10 @@ require 'term/ansicolor'
 namespace :rake_rack do
   task :check_external_dependencies do
     include Term::ANSIColor
+    checker = RakeRack::DependencyChecker.new
 
     puts 'Checking external dependencies...'
-    results = Array(@external_dependencies).each_with_object({}) do |exe, status|
-      status[exe] = system "which #{exe} > /dev/null"
-      status[exe] ? print('.'.green) : print('F'.red)
-    end
+    results = checker.check_list @external_dependencies
     puts
 
     missing = results.select{|_exe, present| present == false}
