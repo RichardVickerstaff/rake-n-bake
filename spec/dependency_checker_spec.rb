@@ -28,7 +28,7 @@ describe RakeRack::DependencyChecker do
     end
 
     it 'can be run without printing anything out' do
-      expect{subject.check silent: true}.to_not output.to_stdout
+      expect{subject.check(true)}.to_not output.to_stdout
     end
   end
 

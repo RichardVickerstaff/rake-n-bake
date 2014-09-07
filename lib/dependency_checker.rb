@@ -8,7 +8,7 @@ class RakeRack
       @dependencies = Array(dependencies)
     end
 
-    def check silent: false
+    def check silent = false
       @results = @dependencies.each_with_object({}) do |dep, results|
         results[dep] = system "which #{dep} >/dev/null"
         unless silent
@@ -18,7 +18,7 @@ class RakeRack
     end
 
     def missing
-      @results ||= check silent: true
+      @results ||= check(true)
       @results.select{|_, present| present == false}.keys
     end
 
