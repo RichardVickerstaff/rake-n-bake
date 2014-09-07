@@ -4,17 +4,22 @@ class RakeRack
   class DependencyChecker
     include Term::ANSIColor
 
-    def check_for dependency
-      system "which #{dependency} >/dev/null"
+    def initialize dependencies
+      @dependencies = Array(dependencies)
     end
 
-    def check_list dependencies, silent: false
-      Array(dependencies).each_with_object({}) do |dep, result|
-        result[dep] = check_for dep
+    def check silent: false
+      @results = @dependencies.each_with_object({}) do |dep, results|
+        results[dep] = system "which #{dep} >/dev/null"
         unless silent
-          result[dep] ? print(".".green) : print("F".red)
+          results[dep] ? print(".".green) : print("F".red)
         end
       end
+    end
+
+    def missing
+      @results ||= check silent: true
+      @results.select{|_, present| present == false}.keys
     end
 
   end

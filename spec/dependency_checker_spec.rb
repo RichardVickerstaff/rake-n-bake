@@ -9,34 +9,32 @@ describe RakeRack::DependencyChecker do
   let(:present) {'rspec'}
   let(:list){ [present, missing] }
 
-  describe '#check_for' do
-    it 'returns true if a program is available' do
-      expect(subject.check_for present).to eq true
-    end
+  subject{RakeRack::DependencyChecker.new list}
 
-    it 'returns false if a program is unavailable' do
-      expect(subject.check_for missing).to eq false
-    end
-  end
-
-  describe '#check_list' do
+  describe '#check' do
     before { $stdout = StringIO.new }
 
     it 'returns a hash of dependencies => presence' do
-      result = subject.check_list [present, missing]
+      result = subject.check
       expect(result).to eq({present => true, missing => false})
     end
 
-    it 'prints a green dot for dependencies which are present' do
-      expect{subject.check_list present}.to output(".".green).to_stdout
+    it 'prints a dot for dependencies which are present' do
+      expect{subject.check}.to output(/\./).to_stdout
     end
 
-    it 'prints a red F for missing dependencies' do
-      expect{subject.check_list missing}.to output("F".red).to_stdout
+    it 'prints a F for missing dependencies' do
+      expect{subject.check}.to output(/F/).to_stdout
     end
 
     it 'can be run without printing anything out' do
-      expect{subject.check_list present, silent: true}.to_not output.to_stdout
+      expect{subject.check silent: true}.to_not output.to_stdout
+    end
+  end
+
+  describe '#missing_from' do
+    it 'returns only missing dependencies' do
+      expect(subject.missing).to eq [missing]
     end
   end
 

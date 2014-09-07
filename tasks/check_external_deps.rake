@@ -3,14 +3,14 @@ require 'term/ansicolor'
 namespace :rake_rack do
   task :check_external_dependencies do
     include Term::ANSIColor
-    checker = RakeRack::DependencyChecker.new
+    checker = RakeRack::DependencyChecker.new(@external_dependencies)
 
     puts 'Checking external dependencies...'
-    results = checker.check_list @external_dependencies
+    checker.check
     puts
 
-    missing = results.select{|_exe, present| present == false}
-    fail("The following dependencies are missing: \n#{missing.keys.join(%Q[\n])}") unless missing.empty?
+    missing = checker.missing
+    fail("The following dependencies are missing: \n#{missing.join(%Q[\n])}") unless missing.empty?
     puts
   end
 end
