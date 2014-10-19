@@ -28,14 +28,16 @@ begin
       end
 
       desc 'Add a prerelease version'
-      task :prerelease do
-        RakeRack::SemverVersioning.prerelease "something"
+      task :prerelease, [:version] do |task, args|
+        version = args[:version] || fail("Invalid usage: rake rake_rack:semver:prerelase['release name']")
+        RakeRack::SemverVersioning.prerelease version
         RakeRack::SemverVersioning.tag
       end
 
       desc 'Increment major version and add a prerelease version'
-      task :inc_prerelease do
-        RakeRack::SemverVersioning.inc_prerelease 'something'
+      task :inc_prerelease, [:version] do |task, args|
+        version = args[:version] || fail("Invalid usage: rake rake_rack:semver:inc_prerelase['release name']")
+        RakeRack::SemverVersioning.inc_prerelease version
         RakeRack::SemverVersioning.tag
       end
 
