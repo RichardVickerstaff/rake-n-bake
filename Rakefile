@@ -9,5 +9,6 @@ task :default => [
   :"rake_rack:code_quality:all",
   :"rake_rack:rspec",
   :"rake_rack:coverage:check_specs",
+  :"rake_rack:bundler_audit",
   :"rake_rack:ok",
 ]

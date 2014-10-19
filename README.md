@@ -28,6 +28,8 @@ For example, this means the `:ok` task is called by invoking `:rake_rack:ok`
 
 Tasks
 -----
+### :bundler_audit
+Check the current Gemfile.lock for gem versions with known security issues, courtesy of [Bundler Audit](https://github.com/rubysec/bundler-audit#readme)
 
 ### :check_external_dependencies
 Check that each command in the `@external_dependencies` array is present on the system path (and fails the task if it isn't)
