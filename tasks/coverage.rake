@@ -1,7 +1,7 @@
 begin
   require "simplecov"
 
-  namespace :rake_rack do
+  namespace :bake do
     namespace :coverage do
       task :check_specs do
         SimpleCov.coverage_dir 'log/coverage/spec'

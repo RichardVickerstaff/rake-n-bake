@@ -1,6 +1,6 @@
 require 'term/ansicolor'
 
-namespace :rake_rack do
+namespace :bake do
   include Term::ANSIColor
 
   desc 'Print the "ALL TESTS PASSED" message'

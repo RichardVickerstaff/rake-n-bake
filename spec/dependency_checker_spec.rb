@@ -2,14 +2,14 @@ require 'spec_helper'
 require 'term/ansicolor'
 include Term::ANSIColor
 
-describe RakeRack::DependencyChecker do
+describe RakeNBake::DependencyChecker do
 
   # Note that this test will fail if you, somehow, have this insane string define on your path
   let(:missing) {'jajfjfjosojfnbje3nknq'}
   let(:present) {'rspec'}
   let(:list){ [present, missing] }
 
-  subject{RakeRack::DependencyChecker.new list}
+  subject{RakeNBake::DependencyChecker.new list}
 
   describe '#check' do
     before { $stdout = StringIO.new }

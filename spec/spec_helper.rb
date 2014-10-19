@@ -8,4 +8,4 @@ SimpleCov.start do
   coverage_dir 'log/coverage/spec'
 end
 
-require_relative '../lib/rake_rack'
+require_relative '../lib/rake_n_bake'

@@ -1,6 +1,6 @@
 require 'term/ansicolor'
 
-class RakeRack
+class RakeNBake
   class DependencyChecker
     include Term::ANSIColor
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RakeRack::Version do
+describe RakeNBake::Version do
   before do
     allow(described_class).to receive(:`)
     allow(described_class).to receive(:puts)
@@ -77,14 +77,14 @@ describe RakeRack::Version do
   end
 
   describe '.update_gem' do
-    let(:tmp_file) { Tempfile.new(['rake_rack','.gemspec']) }
+    let(:tmp_file) { Tempfile.new(['rake-n-bake','.gemspec']) }
 
     before do
       gemspec = <<-GEM
         Gem::Specification.new do |spec|
-          spec.name          = "rake_rack"
+          spec.name          = "rake-n-bake"
           spec.version       = '0.0.5'
-          spec.authors       = ["Richard Vickerstaff"]
+          spec.authors       = ["Richard Vickerstaff", "Adam Whittingham"]
         end
       GEM
       tmp_file.write gemspec
