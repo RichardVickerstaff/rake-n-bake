@@ -54,6 +54,8 @@ class RakeRack
     def self.tag
       v = current_version.to_s
       `git add .semver && git commit -m 'Increment version to #{v}' && git tag #{v}`
+      branch = `git symbolic-ref HEAD`[%r{.*/(.*)}, 1]
+      puts "To push the new tag, use 'git push origin #{branch} --tags'"
     end
   end
 end
