@@ -27,21 +27,21 @@ begin
         RakeRack::SemverVersioning.tag
       end
 
-      desc 'Add a prerelease version'
+      desc 'Add or modify the current prerelease version (eg 1.2.3 => 1.2.3-rc1'
       task :prerelease, [:version] do |task, args|
         version = args[:version] || fail("Invalid usage: rake rake_rack:semver:prerelase['release name']")
         RakeRack::SemverVersioning.prerelease version
         RakeRack::SemverVersioning.tag
       end
 
-      desc 'Increment major version and add a prerelease version'
+      desc 'Increment major version and add a prerelease version (eg 1.2.3-rc1 => 1.2.3-rc2)'
       task :inc_prerelease, [:version] do |task, args|
         version = args[:version] || fail("Invalid usage: rake rake_rack:semver:inc_prerelase['release name']")
         RakeRack::SemverVersioning.inc_prerelease version
         RakeRack::SemverVersioning.tag
       end
 
-      desc 'Remove prerelease version'
+      desc 'Remove prerelease version (eg 1.2.3-rc2 => 1.2.3)'
       task :release do
         RakeRack::SemverVersioning.release
         RakeRack::SemverVersioning.tag
