@@ -3,6 +3,7 @@ require 'term/ansicolor'
 namespace :rake_rack do
   include Term::ANSIColor
 
+  desc 'Print the "ALL TESTS PASSED" message'
   task :ok do
     puts
     print [
@@ -21,6 +22,7 @@ namespace :rake_rack do
     puts
   end
 
+  desc 'Print the "ALL TESTS PASSED" message WITH A SWEET RAINBOW!!!'
   task :ok_rainbow do
     puts
     print "  ",           "   ",            "    ",            "                  ".on_red,     "    ",            "   ",            "  ",           "\n"
