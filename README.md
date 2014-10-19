@@ -16,18 +16,20 @@ Rake-n-Bake tasks are used on the project itself, so you can always take a peek 
 
 Installation
 ------------
-Install the gem or add `gem "rake-n-bake"` to your Gemfile.
+Either:
+  1. Add `gem "rake-n-bake"` to your Gemfile and run bundle install.
+or
+  2. Run `gem install rake-n-bake`
 
 Usage
 -----
-    1. Add `require "rake_n_bake"` to your Rakefile
-    2. Call the tasks that you want, just as with your usual Rake tasks.
-
-Tasks are namespaced under `:bake` to prevent clashes.
-For example, this means the `:ok` task is called by invoking `:bake:ok`
+  1. Add `require "rake_n_bake"` to your Rakefile
+  2. Call the tasks that you want, just as with your usual Rake tasks (examples below!).
 
 Tasks
 -----
+Tasks are namespaced under `:bake` to prevent clashes. For example, the `:ok` task is called by invoking `:bake:ok`
+
 ### :bundler_audit
 Check the current Gemfile.lock for gem versions with known security issues, courtesy of [Bundler Audit](https://github.com/rubysec/bundler-audit#readme)
 
@@ -71,5 +73,8 @@ Run this task last to print a more magical version of `:ok`
 Contributing
 ------------
   1. Make a fork
-  2. Make and push your changes to your fork
-  3. Create a Pull Reques
+  2. Make your changes!
+    a. Namespace new tasks under `:bake`
+    b. Namespace new helpers under `RakeNBake`
+  3. Push your changes to your fork
+  4. Create a Pull Request
