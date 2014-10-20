@@ -1,7 +1,6 @@
 require 'simplecov'
 require 'timecop'
 require 'tempfile'
-require 'pry-byebug'
 
 def production_code
   spec = caller[0][/spec.+\.rb/]
