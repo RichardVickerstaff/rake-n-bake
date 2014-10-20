@@ -9,7 +9,7 @@ deploy:
   provider: rubygems
   api_key:
     secure: RmGYn4yb1PPjZxdWxgwUWTENnRaqp/PXUMfieJoAE0Dw1JrwkjxI3qhy/I6p36KusLsrFxrh4UdATj78QsWdtZVLJ9tvjONOsrAUjIszBwRmOXDWRkH8eLGCCmIYfYMZaRYvlQhPR2t5CC6BwfHS6W1AU5YtU5SSpk0HT+SRzII=
-  gem: rake_rack
+  gem: rake-n-bake
   on:
     tags: true
     repo: RichardVickerstaff/rake-n-bake
