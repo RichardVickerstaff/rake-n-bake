@@ -1,12 +1,9 @@
 require 'term/ansicolor'
 
-class String
-  include Term::ANSIColor
-end
-
 module RakeNBake
   class DependencyChecker
 
+    C = Term::ANSIColor
 
     def initialize dependencies
       @dependencies = Array(dependencies)
@@ -16,7 +13,7 @@ module RakeNBake
       @results = @dependencies.each_with_object({}) do |dep, results|
         results[dep] = system "which #{dep} >/dev/null"
         unless silent
-          results[dep] ? print(".".green) : print("F".red)
+          results[dep] ? print(C.green, ".", C.clear) : print(C.red, "F", C.clear)
         end
       end
     end
