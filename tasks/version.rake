@@ -1,3 +1,5 @@
+require_relative '../lib/version'
+
 desc "Display the latest version (from history.rdoc)"
 task :"bake:version" do
   puts "Latest version is #{RakeNBake::Version.latest_version}"

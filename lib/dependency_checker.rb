@@ -1,8 +1,12 @@
 require 'term/ansicolor'
 
-class RakeNBake
+class String
+  include Term::ANSIColor
+end
+
+module RakeNBake
   class DependencyChecker
-    include Term::ANSIColor
+
 
     def initialize dependencies
       @dependencies = Array(dependencies)

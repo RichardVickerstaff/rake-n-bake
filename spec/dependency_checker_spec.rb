@@ -1,6 +1,5 @@
 require 'spec_helper'
-require 'term/ansicolor'
-include Term::ANSIColor
+require production_code
 
 describe RakeNBake::DependencyChecker do
 

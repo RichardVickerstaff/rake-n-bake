@@ -1,4 +1,5 @@
 require 'spec_helper'
+require production_code
 require 'yaml'
 
 describe RakeNBake::SemverVersioning do

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require production_code
 
 describe RakeNBake::Version do
   before do

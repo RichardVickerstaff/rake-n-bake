@@ -1,7 +1,5 @@
-require 'term/ansicolor'
 
 namespace :bake do
-  include Term::ANSIColor
 
   desc 'Print the "ALL TESTS PASSED" message'
   task :ok do

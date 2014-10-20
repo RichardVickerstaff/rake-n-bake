@@ -1,4 +1,4 @@
-class RakeNBake
+module RakeNBake
   class Version
     HISTORY_FILE = "history.rdoc"
     def self.current_history history_file
