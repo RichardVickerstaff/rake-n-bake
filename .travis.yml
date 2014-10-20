@@ -12,5 +12,5 @@ deploy:
   gem: rake_rack
   on:
     tags: true
-    repo: RichardVickerstaff/rake_rack
+    repo: RichardVickerstaff/rake-n-bake
     all_branches: true
