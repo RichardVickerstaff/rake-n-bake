@@ -1,5 +1,5 @@
 require 'semver'
-class RakeRack
+class RakeNBake
   class SemverVersioning
     def self.current_version
       if File.exist? SemVer.file_name

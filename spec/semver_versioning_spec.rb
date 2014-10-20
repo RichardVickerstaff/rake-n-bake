@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe RakeRack::SemverVersioning do
+describe RakeNBake::SemverVersioning do
   let(:version) {
     {
       major: '1',

@@ -1,50 +1,50 @@
 begin
   require 'semver'
-  namespace :rake_rack do
+  namespace :bake do
     namespace :semver do
 
       desc "Display the latest version (form .semver)"
       task :version do
-        RakeRack::SemverVersioning.latest_version
-        RakeRack::SemverVersioning.tag
+        RakeNBake::SemverVersioning.latest_version
+        RakeNBake::SemverVersioning.tag
       end
 
       desc 'Increment major version in .semver (eg 1.2.3 => 2.0.0)'
       task :major do
-        RakeRack::SemverVersioning.inc_major
-        RakeRack::SemverVersioning.tag
+        RakeNBake::SemverVersioning.inc_major
+        RakeNBake::SemverVersioning.tag
       end
 
       desc 'Increment minor version in .semver (eg 1.2.3 => 1.3.0)'
       task :minor do
-        RakeRack::SemverVersioning.inc_minor
-        RakeRack::SemverVersioning.tag
+        RakeNBake::SemverVersioning.inc_minor
+        RakeNBake::SemverVersioning.tag
       end
 
       desc 'Increment patch version in .semver (eg 1.2.3 => 2.0.0)'
       task :patch do
-        RakeRack::SemverVersioning.inc_patch
-        RakeRack::SemverVersioning.tag
+        RakeNBake::SemverVersioning.inc_patch
+        RakeNBake::SemverVersioning.tag
       end
 
-      desc 'Add or modify the current prerelease version (eg 1.2.3 => 1.2.3-rc1'
+      desc 'Add or modify the current prerelease version (eg 1.2.3-rc1 => 1.2.3-rc2'
       task :prerelease, [:version] do |task, args|
-        version = args[:version] || fail("Invalid usage: rake rake_rack:semver:prerelase['release name']")
-        RakeRack::SemverVersioning.prerelease version
-        RakeRack::SemverVersioning.tag
+        version = args[:version] || fail("Invalid usage: rake bake:semver:prerelase['release name']")
+        RakeNBake::SemverVersioning.prerelease version
+        RakeNBake::SemverVersioning.tag
       end
 
-      desc 'Increment major version and add a prerelease version (eg 1.2.3-rc1 => 1.2.3-rc2)'
+      desc 'Increment major version and add a prerelease version (eg 1.2.3 => 2.0.0-rc1)'
       task :inc_prerelease, [:version] do |task, args|
-        version = args[:version] || fail("Invalid usage: rake rake_rack:semver:inc_prerelase['release name']")
-        RakeRack::SemverVersioning.inc_prerelease version
-        RakeRack::SemverVersioning.tag
+        version = args[:version] || fail("Invalid usage: rake bake:semver:inc_prerelase['release name']")
+        RakeNBake::SemverVersioning.inc_prerelease version
+        RakeNBake::SemverVersioning.tag
       end
 
       desc 'Remove prerelease version (eg 1.2.3-rc2 => 1.2.3)'
       task :release do
-        RakeRack::SemverVersioning.release
-        RakeRack::SemverVersioning.tag
+        RakeNBake::SemverVersioning.release
+        RakeNBake::SemverVersioning.tag
       end
     end
   end
