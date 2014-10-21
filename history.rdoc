@@ -1,3 +1,7 @@
+== 1.0.5 (21 October 2014)
+
+* Fix semver tasks to write to the correct file
+
 == 1.0.4 (21 October 2014)
 
 * Update history.rdoc in semver tasks
