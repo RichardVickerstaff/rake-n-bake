@@ -51,6 +51,19 @@ module RakeNBake
       v.save
     end
 
+    def self.update_history_file
+      history_file = File.join(File.dirname(__FILE__), '../history.rdoc')
+      if File.exist? history_file
+        current_history = File.read history_file
+        File.open history_file, 'w' do |f|
+          f.puts "== #{current_version} (#{Time.now.strftime "%d %B %Y"})"
+          f.puts
+          f.print current_history
+        end
+        `git add history.rdoc`
+      end
+    end
+
     def self.tag
       v = current_version.to_s
       `git add .semver && git commit -m 'Increment version to #{v}' && git tag #{v} -a -m '#{Time.now}'`

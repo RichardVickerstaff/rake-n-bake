@@ -16,18 +16,26 @@ describe RakeNBake::SemverVersioning do
     if File.exist? File.join(File.dirname(__FILE__), '../.semver')
       @current_semver_file = File.read(File.join(File.dirname(__FILE__), '../.semver'), force: true)
     end
+    if File.exist? File.join(File.dirname(__FILE__), '../history.rdoc')
+      @current_history_file = File.read(File.join(File.dirname(__FILE__), '../history.rdoc'), force: true)
+    end
   end
 
   after(:all) do
     if @current_semver_file
       File.write(File.join(File.dirname(__FILE__), '../.semver'), @current_semver_file, force: true)
     end
+    if @current_history_file
+      File.write(File.join(File.dirname(__FILE__), '../history.rdoc'), @current_history_file, force: true)
+    end
   end
-  before do
+  before(:each) do
     FileUtils.rm(File.join(File.dirname(__FILE__), '../.semver'), force: true)
+    FileUtils.rm(File.join(File.dirname(__FILE__), '../history.rdoc'), force: true)
   end
-  after do
+  after(:each) do
     FileUtils.rm(File.join(File.dirname(__FILE__), '../.semver'), force: true)
+    FileUtils.rm(File.join(File.dirname(__FILE__), '../history.rdoc'), force: true)
   end
   describe '#current_version' do
     context 'when there is no .semver file' do
@@ -112,7 +120,20 @@ describe RakeNBake::SemverVersioning do
   describe '#update_history_file' do
     context 'when there is no history file' do
       it 'does nothing' do
+        described_class.update_history_file
+        expect(File.exist? '../history.rdoc').to eq false
+      end
+    end
+    context 'when there is a history file' do
+      before do
+        File.write(File.join(File.dirname(__FILE__), '../.semver'), YAML.dump(version))
+        File.write(File.join(File.dirname(__FILE__), '../history.rdoc'), '* Some changes')
+      end
 
+      it 'Adds the version number and date to the top of the file and adds it to git' do
+        expect(Object).to receive(:`).with('git add history.rdoc')
+        described_class.update_history_file
+        expect(File.read(File.join(File.dirname(__FILE__), '../history.rdoc')).lines.first).to eq "== v1.2.3 (#{Time.now.strftime "%d %B %Y"})\n"
       end
     end
   end
