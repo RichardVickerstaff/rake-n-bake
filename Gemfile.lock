@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rake-n-bake (1.0.1)
+    rake-n-bake (1.0.2)
       rake (~> 10)
       term-ansicolor (~> 1.3)
 
