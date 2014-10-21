@@ -1,3 +1,7 @@
+== 1.0.3 (21 October 2014)
+
+* Wrap rspec require in a begiun rescue
+
 == 1.0.2 (21 October 2014)
 
 * Wrap bundler audit require in a begiun rescue
