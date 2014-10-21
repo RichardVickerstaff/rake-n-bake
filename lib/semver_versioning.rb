@@ -52,7 +52,7 @@ module RakeNBake
     end
 
     def self.update_history_file
-      history_file = File.join(File.dirname(__FILE__), '../history.rdoc')
+      history_file = 'history.rdoc'
       if File.exist? history_file
         current_history = File.read history_file
         File.open history_file, 'w' do |f|
