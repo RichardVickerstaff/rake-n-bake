@@ -49,5 +49,5 @@ begin
     end
   end
 rescue LoadError
-  $stderr.puts "Error: Semver not avaialble"
+  $stderr.puts "Warning: Semver not avaialble"
 end
