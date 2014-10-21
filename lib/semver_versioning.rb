@@ -7,7 +7,7 @@ module RakeNBake
       else
         version = SemVer.new
         version.save SemVer.file_name
-        version
+        SemVer.find
       end
     end
 
