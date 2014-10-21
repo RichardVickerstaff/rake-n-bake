@@ -1,3 +1,5 @@
+== 1.0.1 (21 October 2014)
+
 * Require libs in tasks and only require gems in them
 * Import RakeRack
 
