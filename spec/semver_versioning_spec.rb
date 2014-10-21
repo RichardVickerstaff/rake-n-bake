@@ -109,12 +109,20 @@ describe RakeNBake::SemverVersioning do
     end
   end
 
+  describe '#update_history_file' do
+    context 'when there is no history file' do
+      it 'does nothing' do
+
+      end
+    end
+  end
+
   describe 'tag' do
     before do
       File.write(File.join(File.dirname(__FILE__), '../.semver'), YAML.dump(version))
     end
     it 'tags with the curren semver release and outputs push instructions' do
-      expect(Object).to receive(:`).with("git add .semver && git commit -m 'Increment version to v1.2.3' && git tag v1.2.3")
+      expect(Object).to receive(:`).with("git add .semver && git commit -m 'Increment version to v1.2.3' && git tag v1.2.3 -a -m '#{Time.now}'")
       expect(Object).to receive(:`).with('git symbolic-ref HEAD').and_return 'refs/heads/master'
       expect(Object).to receive(:puts).with("To push the new tag, use 'git push origin master --tags'")
       described_class.tag
