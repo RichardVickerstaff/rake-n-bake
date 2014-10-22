@@ -53,6 +53,22 @@ begin
       end
     end
   end
+
 rescue LoadError
-  $stderr.puts "Warning: Semver not avaialble"
+
+  tasks = %i[version major minor patch prerelease inc_prerelease release]
+
+  namespace :bake do
+    namespace :semver do
+      tasks.each do |t|
+        desc 'SemVer rake tasks are not available (gem not installed)'
+        task t do
+          $stdout.puts "This task is not available because the SemVer2 gem is not installed."
+          $stderr.puts "Try adding \"gem 'semver2'\" to your Gemfile or run `gem semver2 rspec` and try again."
+          abort
+        end
+      end
+    end
+  end
+
 end

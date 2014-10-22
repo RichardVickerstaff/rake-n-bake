@@ -3,11 +3,12 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'semver2'
+  gem 'bundler-audit'
+  gem 'cucumber'
   gem 'rake'
   gem 'rspec'
-  gem 'bundler-audit'
+  gem 'semver2'
   gem 'simplecov'
-  gem 'timecop'
   gem 'term-ansicolor', '~> 1.3'
+  gem 'timecop'
 end
