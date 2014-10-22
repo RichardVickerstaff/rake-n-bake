@@ -52,16 +52,18 @@ module RakeNBake
     end
 
     def self.update_history_file
-      history_file = 'history.rdoc'
-      if File.exist? history_file
-        current_history = File.read history_file
-        File.open history_file, 'w' do |f|
-          f.puts "== #{current_version} (#{Time.now.strftime "%d %B %Y"})"
-          f.puts
-          f.print current_history
+      supported_history_files = %w[ history.rdoc CHANGELOG.md ]
+      supported_history_files
+        .select {|histf| File.exist? histf}
+        .map do |histf|
+          current_history = File.read histf
+          File.open histf, 'w' do |f|
+            f.puts "== #{current_version} (#{Time.now.strftime "%d %B %Y"})"
+            f.puts
+            f.print current_history
+          end
+          `git add #{histf}`
         end
-        `git add history.rdoc`
-      end
     end
 
     def self.tag

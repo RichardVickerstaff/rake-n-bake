@@ -122,18 +122,37 @@ describe RakeNBake::SemverVersioning do
       it 'does nothing' do
         described_class.update_history_file
         expect(File.exist? '../history.rdoc').to eq false
+        expect(File.exist? '../CHANGELOG.md').to eq false
       end
     end
-    context 'when there is a history file' do
+
+    context 'when there is a history.rdoc file' do
       before do
         File.write(File.join(File.dirname(__FILE__), '../.semver'), YAML.dump(version))
         File.write(File.join(File.dirname(__FILE__), '../history.rdoc'), '* Some changes')
       end
 
+      after { File.unlink(File.join(File.dirname(__FILE__), '../history.rdoc')) }
+
       it 'Adds the version number and date to the top of the file and adds it to git' do
         expect(Object).to receive(:`).with('git add history.rdoc')
         described_class.update_history_file
         expect(File.read(File.join(File.dirname(__FILE__), '../history.rdoc')).lines.first).to eq "== v1.2.3 (#{Time.now.strftime "%d %B %Y"})\n"
+      end
+    end
+
+    context 'when there is a CHANGELOG.md file' do
+      before do
+        File.write(File.join(File.dirname(__FILE__), '../.semver'), YAML.dump(version))
+        File.write(File.join(File.dirname(__FILE__), '../CHANGELOG.md'), '* Some changes')
+      end
+
+      after { File.unlink(File.join(File.dirname(__FILE__), '../CHANGELOG.md')) }
+
+      it 'Adds the version number and date to the top of the file and adds it to git' do
+        expect(Object).to receive(:`).with('git add CHANGELOG.md')
+        described_class.update_history_file
+        expect(File.read(File.join(File.dirname(__FILE__), '../CHANGELOG.md')).lines.first).to eq "== v1.2.3 (#{Time.now.strftime "%d %B %Y"})\n"
       end
     end
   end
