@@ -1,3 +1,7 @@
+== 1.0.6 (23 October 2014)
+
+* SemVer now patches CHANGELOG.md as well as history.rdoc
+
 == 1.0.5 (21 October 2014)
 
 * Fix semver tasks to write to the correct file
