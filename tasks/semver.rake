@@ -56,7 +56,7 @@ begin
 
 rescue LoadError
 
-  tasks = %i[version major minor patch prerelease inc_prerelease release]
+  tasks = %w[version major minor patch prerelease inc_prerelease release].map(&:to_sym)
 
   namespace :bake do
     namespace :semver do

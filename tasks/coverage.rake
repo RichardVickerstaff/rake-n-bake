@@ -20,7 +20,7 @@ rescue LoadError
 
   namespace :bake do
     namespace :coverage do
-      %i[check_specs check_cucumber].each do |t|
+      %w[check_specs check_cucumber].map(&:to_sym).each do |t|
         desc 'SimpleCov rake tasks are not available (gem not installed)'
         task t do
           $stdout.puts "This task is not available because the SimpleCov gem is not installed."

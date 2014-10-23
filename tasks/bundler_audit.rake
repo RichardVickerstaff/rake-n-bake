@@ -10,7 +10,7 @@ begin
 
 rescue LoadError
 
-  tasks = %i[bundler_audit]
+  tasks = %w[bundler_audit].map(&:to_sym)
 
   namespace :bake do
     tasks.each do |t|
