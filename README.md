@@ -8,6 +8,7 @@ Commonly used Rake tasks
 
 [![Build Status](https://travis-ci.org/RichardVickerstaff/rake-n-bake.svg?branch=master)](https://travis-ci.org/RichardVickerstaff/rake-n-bake)
 [![Gem Version](https://badge.fury.io/rb/rake-n-bake.svg)](http://badge.fury.io/rb/rake-n-bake)
+[![Code Climate](https://codeclimate.com/github/RichardVickerstaff/rake-n-bake/badges/gpa.svg)](https://codeclimate.com/github/RichardVickerstaff/rake-n-bake)
 
 Rake-n-Bake is a collection of widely applicable Rake tasks used on many projects.
 They have been extracted into a gem to allow them to easily be reused and maintained.
