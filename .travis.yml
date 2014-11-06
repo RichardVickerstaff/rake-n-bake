@@ -5,6 +5,9 @@ rvm:
 - 1.9.3
 - ruby-head
 - jruby-1.7.12
+env:
+  global:
+    - CODECLIMATE_REPO_TOKEN=6e1cff9fab6a2878c20e9935e9fbe551bb056ad03347f05faef813c058fc6f8f
 deploy:
   provider: rubygems
   api_key:
