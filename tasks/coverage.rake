@@ -3,12 +3,14 @@ begin
 
   namespace :bake do
     namespace :coverage do
+      desc 'Check coverage from RSpec'
       task :check_specs do
         SimpleCov.coverage_dir 'log/coverage/spec'
         coverage = SimpleCov.result.covered_percent
         fail "Spec coverage was only #{coverage}%" if coverage < 100.0
       end
 
+      desc 'Check coverage from Cucumber'
       task :check_cucumber do
         SimpleCov.coverage_dir 'log/coverage/features'
         coverage = SimpleCov.result.covered_percent
