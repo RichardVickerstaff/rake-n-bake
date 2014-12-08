@@ -9,7 +9,7 @@ begin
         SimpleCov.coverage_dir 'log/coverage/spec'
         coverage = SimpleCov.result.covered_percent
         fail "Spec coverage was only #{coverage}%" if coverage < 100.0
-        puts "Spec coverage is at #{coverage}%"
+        RakeNBake::AssistantBaker.log_passed "Spec coverage is at #{coverage}%"
       end
 
       desc 'Check coverage from Cucumber'
@@ -18,12 +18,13 @@ begin
         SimpleCov.coverage_dir 'log/coverage/features'
         coverage = SimpleCov.result.covered_percent
         fail "Feature coverage was only #{coverage}%" if coverage < 100.0
-        puts "Feature coverage is at #{coverage}%"
+        RakeNBake::AssistantBaker.log_passed "Feature coverage is at #{coverage}%"
       end
     end
   end
 
 rescue LoadError
+
   namespace :bake do
     namespace :coverage do
       %w[check_specs check_cucumber].map(&:to_sym).each do |t|
@@ -36,4 +37,5 @@ rescue LoadError
       end
     end
   end
+
 end
