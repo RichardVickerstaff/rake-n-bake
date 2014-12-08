@@ -3,6 +3,7 @@ begin
 
   RSpec::Core::RakeTask.new(:"bake:rspec") do |t|
     t.verbose = false
+    RakeNBake::AssistantBaker.log_step 'Running specs'
   end
 
   RSpec::Core::RakeTask.new(:"bake:rspec_test_prepare" => :"test:prepare") do |t|

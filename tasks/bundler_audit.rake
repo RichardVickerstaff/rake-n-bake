@@ -4,6 +4,7 @@ begin
   namespace :bake do
     desc 'Check Gemfile.lock for security issues'
     task :bundler_audit do
+      RakeNBake::AssistantBaker.log_step 'Checking gems for known security warnings'
       Bundler::Audit::CLI.start
     end
   end
