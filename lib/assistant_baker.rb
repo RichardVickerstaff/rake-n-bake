@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'term/ansicolor'
 
 module RakeNBake
