@@ -1,10 +1,11 @@
 # coding: utf-8
+require File.expand_path('../lib/version', __FILE__)
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "rake-n-bake"
-  spec.version       = '1.1.1'
+  spec.version       = RakeNBake::VERSION
   spec.authors       = ["Richard Vickerstaff", "Adam Whittingham"]
   spec.email         = ["m3akq@btinternet.com", "adam.whittingham@gmail.com"]
   spec.description   = "Common rake tasks, baked to perfection and ready to serve!"
