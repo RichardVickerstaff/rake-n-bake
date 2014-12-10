@@ -1,5 +1,5 @@
 module RakeNBake
-  class Version
+  class Versioning
     HISTORY_FILE = "history.rdoc"
     def self.current_history history_file
       unless File.exists? history_file

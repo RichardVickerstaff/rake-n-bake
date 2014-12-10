@@ -1,7 +1,7 @@
 require 'spec_helper'
 require production_code
 
-describe RakeNBake::Version do
+describe RakeNBake::Versioning do
   before do
     allow(described_class).to receive(:`)
     allow(described_class).to receive(:puts)
