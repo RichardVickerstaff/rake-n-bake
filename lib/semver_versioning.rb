@@ -14,15 +14,15 @@ module RakeNBake
     def self.inc_major
       v = current_version
       v.major = v.major.to_i + 1
-      v.minor = '0'
-      v.patch = '0'
+      v.minor = 0
+      v.patch = 0
       v.save
     end
 
     def self.inc_minor
       v = current_version
       v.minor = v.minor.to_i + 1
-      v.patch = '0'
+      v.patch = 0
       v.save
     end
 
