@@ -22,7 +22,7 @@ begin
         RakeNBake::SemverVersioning.tag
       end
 
-      desc 'Increment patch version in .semver (eg 1.2.3 => 2.0.0)'
+      desc 'Increment patch version in .semver (eg 1.2.3 => 1.2.4)'
       task :patch do
         RakeNBake::SemverVersioning.inc_patch
         RakeNBake::SemverVersioning.update_history_file
