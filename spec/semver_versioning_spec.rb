@@ -157,6 +157,45 @@ describe RakeNBake::SemverVersioning do
     end
   end
 
+  describe '#prepare_history_file_from_git' do
+    let!(:last_tag) { `git describe --abbrev=0 --tags`.chomp }
+    let(:changes_since_last_tag) { `git log --graph --oneline #{last_tag}..HEAD | grep '^*' | grep -vE '[Mm]erge|[Ii]ncrement' | cut -d' ' -f1 -f3-` }
+
+    context 'when there is no history file' do
+      it 'does nothing' do
+        described_class.prepare_history_file_from_git
+        expect(File.exist? '../history.rdoc').to eq false
+        expect(File.exist? '../CHANGELOG.md').to eq false
+      end
+    end
+
+    context 'when there is a history.rdoc file' do
+      before do
+        File.write(File.join(File.dirname(__FILE__), '../history.rdoc'), '* Some changes')
+      end
+
+      after { File.unlink(File.join(File.dirname(__FILE__), '../history.rdoc')) }
+
+      it 'writes the git log since the last tag to the history file' do
+        described_class.prepare_history_file_from_git
+        expect(File.read(File.join(File.dirname(__FILE__), '../history.rdoc')).lines.first).to include(changes_since_last_tag)
+      end
+    end
+
+    context 'when there is a CHANGELOG.md file' do
+      before do
+        File.write(File.join(File.dirname(__FILE__), '../CHANGELOG.md'), '* Some changes')
+      end
+
+      after { File.unlink(File.join(File.dirname(__FILE__), '../CHANGELOG.md')) }
+
+      it 'Adds the version number and date to the top of the file and adds it to git' do
+        described_class.prepare_history_file_from_git
+        expect(File.read(File.join(File.dirname(__FILE__), '../CHANGELOG.md')).lines.first).to include(changes_since_last_tag)
+      end
+    end
+  end
+
   describe 'tag' do
     before do
       File.write(File.join(File.dirname(__FILE__), '../.semver'), YAML.dump(version))

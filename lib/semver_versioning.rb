@@ -66,6 +66,25 @@ module RakeNBake
         end
     end
 
+    def self.prepare_history_file_from_git
+      last_tag = `git describe --abbrev=0 --tags`.chomp
+      changes_since_last_tag = `git log --graph --oneline #{last_tag}..HEAD | grep '^*' | grep -vE '[Mm]erge|[Ii]ncrement' | cut -d' ' -f1 -f3-`
+      supported_history_files = %w[ history.rdoc CHANGELOG.md ]
+      supported_history_files
+        .select {|histf| File.exist? histf}
+        .map do |histf|
+          current_history = File.read histf
+          File.open histf, 'w' do |f|
+            changes_since_last_tag.each_line do |line|
+              f.puts line.chomp
+            end
+            f.puts
+            f.print current_history
+          end
+        end
+      puts "History file updated with changes from git."
+    end
+
     def self.tag
       v = current_version.to_s
       `git add .semver && git commit -m 'Increment version to #{v}' && git tag #{v} -a -m '#{Time.now}'`

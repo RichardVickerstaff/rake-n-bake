@@ -8,6 +8,11 @@ begin
         RakeNBake::SemverVersioning.current_version
       end
 
+      desc 'Prepare history file from git'
+      task :prepare do
+        RakeNBake::SemverVersioning.prepare_history_file_from_git
+      end
+
       desc 'Increment major version in .semver (eg 1.2.3 => 2.0.0)'
       task :major do
         RakeNBake::SemverVersioning.inc_major
