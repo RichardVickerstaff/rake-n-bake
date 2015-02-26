@@ -159,7 +159,7 @@ describe RakeNBake::SemverVersioning do
 
   describe '#prepare_history_file_from_git' do
     let!(:last_tag) { `git describe --abbrev=0 --tags`.chomp }
-    let(:changes_since_last_tag) { `git log --graph --oneline #{last_tag}..HEAD | grep '^*' | grep -vE '[Mm]erge|[Ii]ncrement' | cut -d' ' -f1 -f3-` }
+    let(:changes_since_last_tag) { `git log --graph --oneline #{last_tag}..HEAD | grep '^*' | grep -vE '[Mm]erge|[Ii]ncrement' | cut -d' ' -f1 -f3-`.lines.first }
 
     context 'when there is no history file' do
       it 'does nothing' do
@@ -178,7 +178,7 @@ describe RakeNBake::SemverVersioning do
 
       it 'writes the git log since the last tag to the history file' do
         described_class.prepare_history_file_from_git
-        expect(File.read(File.join(File.dirname(__FILE__), '../history.rdoc')).lines.first).to include(changes_since_last_tag)
+        expect(File.read(File.join(File.dirname(__FILE__), '../history.rdoc')).lines.first).to include(changes_since_last_tag.chomp)
       end
     end
 
