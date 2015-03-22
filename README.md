@@ -18,14 +18,27 @@ Rake-n-Bake tasks are used on the project itself, so you can always take a peek 
 Installation
 ------------
 Either:
-  1. Add `gem "rake-n-bake"` to your Gemfile and run bundle install.
+  - Add `gem "rake-n-bake"` to your Gemfile and run bundle install.
+
 or
-  2. Run `gem install rake-n-bake`
+
+  - Run `gem install rake-n-bake`
 
 Usage
 -----
-  1. Add `require "rake_n_bake"` to your Rakefile
+  1. Add `require "rake-n-bake"` to your Rakefile
   2. Call the tasks that you want, just as with your usual Rake tasks (examples below!).
+    For example:
+    ```ruby
+    task :default => [
+      :clean,
+      :"bake:code_quality:all",
+      :"bake:rspec",
+      :"bake:coverage:check_specs",
+      :"bake:bundler_audit",
+      :"bake:ok_rainbow",
+    ]
+    ```
 
 Tasks
 -----

@@ -1,5 +1,5 @@
 require 'rake/clean'
-require './lib/rake_n_bake'
+require './lib/rake-n-bake'
 
 @external_dependencies = %w[ruby rake]
 
