@@ -17,8 +17,7 @@ rescue LoadError
     tasks.each do |t|
       desc "This task is not available"
       task t do
-        $stderr.puts "This task is not available because '#{missing}' is not available."
-        $stderr.puts "Try adding \"gem 'bundler-audit'\" to your Gemfile or run `gem install bundler-audit` and try again."
+        RakeNBake::AssistantBaker.log_missing_gem 'bundler-audit'
         abort
       end
     end

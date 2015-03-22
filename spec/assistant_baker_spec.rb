@@ -22,4 +22,15 @@ describe RakeNBake::AssistantBaker do
       expect{described_class.log_passed 'Foo'}.to output("#{Term::ANSIColor.green}Foo#{Term::ANSIColor.reset}\n").to_stdout
     end
   end
+
+  describe '#log_missing_gem' do
+    it 'puts a message asking for the gem to be installed' do
+      expect{described_class.log_missing_gem 'foo'}.to output(/Try adding "gem 'foo'"/).to_stderr
+    end
+
+    it 'can optionally take a different name for the tool' do
+      expect{described_class.log_missing_gem 'foo', 'Bar'}.to output(/'Bar' is not available/).to_stderr
+      expect{described_class.log_missing_gem 'foo', 'Bar'}.to output(/Try adding "gem 'foo'"/).to_stderr
+    end
+  end
 end
