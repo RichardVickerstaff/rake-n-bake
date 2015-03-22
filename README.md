@@ -85,7 +85,7 @@ Useful at the end of any Rake tasks which test your application, it prints `****
 Run this task last to print a more magical version of `:ok`
 
 Handy Tips for new tasks
------=------------------
+------------------------
 - All tasks loaded by `lib/rake_n_bake.rb` will have access to the `RakeNBake::AssistantBaker`. This is intended for truely common things, like logging out when a particular step runs or passes.
 
 Contributing
