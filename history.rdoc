@@ -1,6 +1,9 @@
-== v0.0.1 (22 March 2015)
+== v1.1.3 (22 March 2015)
+* Extract missing gem messages for consistant styling.
 
 == 1.1.2 (10 February 2015)
+* Allow the gem to be required with 'rake-n-bake' to match the gem name
+* Add alias so old projects can still require 'rake_n_bake'
 
 == 1.1.1 (05 January 2015)
 
