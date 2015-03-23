@@ -4,8 +4,10 @@ rvm:
 - 2.0.0
 - 1.9.3
 - jruby-1.7.12
-allow_failures:
-  - rvm: ruby-head
+- ruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
 env:
   global:
     - CODECLIMATE_REPO_TOKEN=6e1cff9fab6a2878c20e9935e9fbe551bb056ad03347f05faef813c058fc6f8f
