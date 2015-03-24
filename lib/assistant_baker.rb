@@ -11,6 +11,14 @@ module RakeNBake
         Term::ANSIColor.reset
     end
 
+    def self.log_warn message
+      puts Term::ANSIColor.red +
+        Term::ANSIColor.underline +
+        '● ' +
+        message +
+        Term::ANSIColor.reset
+    end
+
     def self.log_passed message
       puts Term::ANSIColor.green +
         message +

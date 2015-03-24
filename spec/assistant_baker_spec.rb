@@ -13,6 +13,16 @@ describe RakeNBake::AssistantBaker do
     end
   end
 
+  describe '#log_warn' do
+    it 'puts the given message' do
+      expect{described_class.log_warn 'Foo'}.to output(/Foo/).to_stdout
+    end
+
+    it 'prints an attractive dot before the message' do
+      expect{described_class.log_warn 'Foo'}.to output(/● Foo/).to_stdout
+    end
+  end
+
   describe '#log_passed' do
     it 'puts the given message' do
       expect{described_class.log_passed 'Foo'}.to output(/Foo/).to_stdout
