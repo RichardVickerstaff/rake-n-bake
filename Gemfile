@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
+  gem 'aruba-rspec'
   gem "codeclimate-test-reporter", require: nil
   gem 'bundler-audit'
   gem 'cucumber'

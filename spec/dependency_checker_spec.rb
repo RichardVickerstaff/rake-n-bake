@@ -2,18 +2,19 @@ require 'spec_helper'
 require production_code
 
 describe RakeNBake::DependencyChecker do
-
-  # Note that this test will fail if you, somehow, have this insane string define on your path
-  let(:missing) {'jajfjfjosojfnbje3nknq'}
-  let(:present) {'rspec'}
-  let(:list){ [present, missing] }
+  let(:list){ ['present', 'missing'] }
 
   subject{RakeNBake::DependencyChecker.new list}
+
+  before do
+    double_cmd('which present', exit: 0)
+    double_cmd('which missing', exit: 1)
+  end
 
   describe '#check' do
     it 'returns a hash of dependencies => presence' do
       result = subject.check
-      expect(result).to eq({present => true, missing => false})
+      expect(result).to eq({'present' => true, 'missing' => false})
     end
 
     it 'prints a dot for dependencies which are present' do
@@ -25,13 +26,14 @@ describe RakeNBake::DependencyChecker do
     end
 
     it 'can be run without printing anything out' do
-      expect{subject.check(true)}.to_not output.to_stdout
+      silent = true
+      expect{subject.check(silent)}.to_not output.to_stdout
     end
   end
 
-  describe '#missing_from' do
+  describe '#missing' do
     it 'returns only missing dependencies' do
-      expect(subject.missing).to eq [missing]
+      expect(subject.missing).to eq ['missing']
     end
   end
 
