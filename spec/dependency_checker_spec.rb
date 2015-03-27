@@ -11,8 +11,6 @@ describe RakeNBake::DependencyChecker do
   subject{RakeNBake::DependencyChecker.new list}
 
   describe '#check' do
-    before { $stdout = StringIO.new }
-
     it 'returns a hash of dependencies => presence' do
       result = subject.check
       expect(result).to eq({present => true, missing => false})
