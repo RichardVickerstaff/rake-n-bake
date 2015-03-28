@@ -1,5 +1,6 @@
 language: ruby
 rvm:
+- 2.2.0
 - 2.1.0
 - 2.0.0
 - 1.9.3
@@ -8,9 +9,9 @@ rvm:
 matrix:
   allow_failures:
     - rvm: ruby-head
-env:
-  global:
-    - CODECLIMATE_REPO_TOKEN=6e1cff9fab6a2878c20e9935e9fbe551bb056ad03347f05faef813c058fc6f8f
+addons:
+  code_climaate:
+    repo_token: 6e1cff9fab6a2878c20e9935e9fbe551bb056ad03347f05faef813c058fc6f8f
 deploy:
   provider: rubygems
   api_key:
