@@ -2,6 +2,7 @@ require 'spec_helper'
 require production_code
 
 describe RakeNBake::DependencyChecker do
+  let(:silent) { true }
   let(:list){ ['present', 'missing'] }
 
   subject{RakeNBake::DependencyChecker.new list}
@@ -13,7 +14,7 @@ describe RakeNBake::DependencyChecker do
 
   describe '#check' do
     it 'returns a hash of dependencies => presence' do
-      result = subject.check
+      result = subject.check(silent)
       expect(result).to eq({'present' => true, 'missing' => false})
     end
 
@@ -26,7 +27,6 @@ describe RakeNBake::DependencyChecker do
     end
 
     it 'can be run without printing anything out' do
-      silent = true
       expect{subject.check(silent)}.to_not output.to_stdout
     end
   end
