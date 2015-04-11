@@ -9,6 +9,5 @@ task :default => [
   :"bake:code_quality:all",
   :"bake:rspec",
   :"bake:coverage:check_specs",
-  :"bake:bundler_audit",
   :"bake:ok_rainbow",
 ]
