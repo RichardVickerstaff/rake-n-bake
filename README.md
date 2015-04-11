@@ -28,6 +28,7 @@ Usage
 -----
   1. Add `require "rake-n-bake"` to your Rakefile
   2. Call the tasks that you want, just as with your usual Rake tasks (examples below!).
+
   For example:
 
 ```ruby
@@ -90,6 +91,19 @@ Run this task last to print a more magical version of `:ok`
 
 ### :rails_best_practices
 Run this task to run the [Rails Best Practices](https://github.com/railsbp/rails_best_practices) metrics against your Rails project.
+
+### :rspec
+Run all the tests in the spec directory with rspec
+#### :rspec:unit
+Run all the specs not in a features or integration directory
+#### :rspec:integration
+Run all the specs in the integration directory
+#### :rspec:requests
+Run all the specs in the requests directory
+#### :rspec:features
+Run all the specs in the features directory
+#### :rspec:tag[mytag]
+Run all the specs tagged using `mytag: true`
 
 Handy Tips for new tasks
 ------------------------
