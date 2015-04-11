@@ -28,17 +28,21 @@ Usage
 -----
   1. Add `require "rake-n-bake"` to your Rakefile
   2. Call the tasks that you want, just as with your usual Rake tasks (examples below!).
-    For example:
-    ```ruby
-    task :default => [
-      :clean,
-      :"bake:code_quality:all",
-      :"bake:rspec",
-      :"bake:coverage:check_specs",
-      :"bake:bundler_audit",
-      :"bake:ok_rainbow",
-    ]
-    ```
+  For example:
+
+```ruby
+require "rake-n-bake"
+
+task :default => [
+  :clean,
+  :"bake:code_quality:all",
+  :"bake:rspec",
+  :"bake:coverage:check_specs",
+  :"bake:bundler_audit",
+  :"bake:ok_rainbow",
+]
+
+```
 
 Tasks
 -----
