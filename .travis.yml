@@ -11,6 +11,7 @@ jdk:
 matrix:
   allow_failures:
     - rvm: ruby-head
+    - rvm: jruby-1.7.12
 addons:
   code_climate:
     repo_token: 6e1cff9fab6a2878c20e9935e9fbe551bb056ad03347f05faef813c058fc6f8f
