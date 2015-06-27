@@ -1,5 +1,7 @@
 begin
   require_relative '../lib/semver_versioning'
+  require_relative '../lib/assistant_baker'
+
   namespace :bake do
     namespace :semver do
 
@@ -63,7 +65,7 @@ rescue LoadError
       tasks.each do |t|
         desc 'SemVer rake tasks are not available (gem not installed)'
         task t do
-          RakeNBake::AssistantBaker 'semver2'
+          RakeNBake::AssistantBaker.log_missing_gem 'semver2'
           abort
         end
       end
