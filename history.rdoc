@@ -1,3 +1,5 @@
+== v1.2.0 (28 June 2015)
+
 * Remove deprecated versioning task
 
 == v1.1.5 (28 June 2015)
