@@ -4,7 +4,7 @@ begin
   namespace :bake do
     task :fasterer do
       RakeNBake::AssistantBaker.log_step 'Running Fasterer'
-      `fasterer`
+      system('fasterer')
     end
   end
 
