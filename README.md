@@ -41,6 +41,7 @@ task :default => [
   :"bake:coverage:check_specs",
   :"bake:bundler_audit",
   :"bake:rubocop",
+  :"bake:rubycritic",
   :"bake:ok_rainbow",
 ]
 
@@ -114,6 +115,9 @@ Run all the specs tagged using `mytag: true`
 
 ### :rubocop
 Runs [Rubocop](https://github.com/bbatsov/rubocop) over the project and lists violations/warnings
+
+### :rubycritic
+Runs the [RubyCritic](https://github.com/whitesmith/rubycritic) tool and generates a report about the health of your code
 
 Handy Tips for new tasks
 ------------------------

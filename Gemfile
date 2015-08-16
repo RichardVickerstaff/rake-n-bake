@@ -13,6 +13,7 @@ group :development, :test do
   gem 'rake'
   gem 'rspec'
   gem 'rubocop'
+  gem 'rubycritic'
   gem 'semver2'
   gem 'simplecov'
   gem 'term-ansicolor', '~> 1.3'
