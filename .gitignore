@@ -1,4 +1,5 @@
 /log/*
+/tmp/*
 *.gem
 *.sw?
 Gemfile.lock

@@ -7,6 +7,7 @@ group :development, :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'bundler-audit'
   gem 'cucumber'
+  gem 'metric_fu'
   gem 'rake'
   gem 'rspec'
   gem 'semver2'
