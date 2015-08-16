@@ -84,6 +84,9 @@ Look at SimpleCov results for spec coverage in `log/coverage/spec` and fail the 
 #### :check_cucumber
 Look at SimpleCov results for Cucumber coverage in `log/coverage/features` and fail the build if not 100%
 
+### :fasterer
+Run the [fasterer](https://github.com/DamirSvrtan/fasterer) tool to spot performance improvements in your code
+
 ### :ok
 Useful at the end of any Rake tasks which test your application, it prints `***** ALL TESTS PASSED *****`.
 
