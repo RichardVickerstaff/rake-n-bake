@@ -5,6 +5,7 @@ gemspec
 group :development, :test do
   gem 'aruba-rspec'
   gem "codeclimate-test-reporter", require: nil
+  gem 'brakeman'
   gem 'bundler-audit'
   gem 'cucumber'
   gem 'fasterer'

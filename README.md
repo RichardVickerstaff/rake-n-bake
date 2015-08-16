@@ -50,6 +50,9 @@ Tasks
 -----
 Tasks are namespaced under `:bake` to prevent clashes. For example, the `:ok` task is called by invoking `:bake:ok`
 
+### :brakeman
+Run [Brakeman](http://brakemanscanner.org/) to look for security issues on a Rails project
+
 ### :bundler_audit
 Check the current Gemfile.lock for gem versions with known security issues, courtesy of [Bundler Audit](https://github.com/rubysec/bundler-audit#readme)
 
