@@ -40,6 +40,7 @@ task :default => [
   :"bake:rspec",
   :"bake:coverage:check_specs",
   :"bake:bundler_audit",
+  :"bake:rubocop",
   :"bake:ok_rainbow",
 ]
 
@@ -104,6 +105,9 @@ Run all the specs in the requests directory
 Run all the specs in the features directory
 #### :rspec:tag[mytag]
 Run all the specs tagged using `mytag: true`
+
+### :rubocop
+Runs [Rubocop](https://github.com/bbatsov/rubocop) over the project and lists violations/warnings
 
 Handy Tips for new tasks
 ------------------------
