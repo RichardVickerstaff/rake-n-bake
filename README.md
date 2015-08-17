@@ -40,6 +40,8 @@ task :default => [
   :"bake:rspec",
   :"bake:coverage:check_specs",
   :"bake:bundler_audit",
+  :"bake:rubocop",
+  :"bake:rubycritic",
   :"bake:ok_rainbow",
 ]
 
@@ -48,6 +50,9 @@ task :default => [
 Tasks
 -----
 Tasks are namespaced under `:bake` to prevent clashes. For example, the `:ok` task is called by invoking `:bake:ok`
+
+### :brakeman
+Run [Brakeman](http://brakemanscanner.org/) to look for security issues on a Rails project
 
 ### :bundler_audit
 Check the current Gemfile.lock for gem versions with known security issues, courtesy of [Bundler Audit](https://github.com/rubysec/bundler-audit#readme)
@@ -83,6 +88,9 @@ Look at SimpleCov results for spec coverage in `log/coverage/spec` and fail the 
 #### :check_cucumber
 Look at SimpleCov results for Cucumber coverage in `log/coverage/features` and fail the build if not 100%
 
+### :fasterer
+Run the [fasterer](https://github.com/DamirSvrtan/fasterer) tool to spot performance improvements in your code
+
 ### :ok
 Useful at the end of any Rake tasks which test your application, it prints `***** ALL TESTS PASSED *****`.
 
@@ -104,6 +112,12 @@ Run all the specs in the requests directory
 Run all the specs in the features directory
 #### :rspec:tag[mytag]
 Run all the specs tagged using `mytag: true`
+
+### :rubocop
+Runs [Rubocop](https://github.com/bbatsov/rubocop) over the project and lists violations/warnings
+
+### :rubycritic
+Runs the [RubyCritic](https://github.com/whitesmith/rubycritic) tool and generates a report about the health of your code
 
 Handy Tips for new tasks
 ------------------------
