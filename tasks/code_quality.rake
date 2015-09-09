@@ -28,7 +28,7 @@ namespace :bake do
       grep_for_console_log %w{app/assets/javascripts }
     end
 
-    desc 'check for Time.now should use Time.zone.now'
+    desc 'check for Time.now; should use Time.now.utc or Time.current'
     task :time_check do
       grep_for_time_now %w{app lib}
     end
