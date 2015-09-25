@@ -1,24 +1,44 @@
 begin
   require "simplecov"
 
+  def set_coverage_dir coverage_dir
+    report = File.join(coverage_dir, 'index.html')
+    if File.exists?(report)
+      SimpleCov.coverage_dir coverage_dir
+    else
+      RakeNBake::AssistantBaker.log_warn "SimpleCov report could not be found at #{report}"
+      fail
+    end
+  end
+
+  def check_coverage_level_above level
+    coverage = SimpleCov.result.covered_percent
+    if coverage >= level
+      RakeNBake::AssistantBaker.log_passed "Feature coverage is at #{coverage}%"
+    else
+      RakeNBake::AssistantBaker.log_warn "Spec coverage was only #{coverage}%"
+      fail
+    end
+  end
+
   namespace :bake do
     namespace :coverage do
+      COVERAGE_PERCENT = ENV['COVERAGE_PERCENT'] || 100.0
+
       desc 'Check coverage from RSpec'
       task :check_specs do
         RakeNBake::AssistantBaker.log_step 'Checking spec coverage'
-        SimpleCov.coverage_dir 'log/coverage/spec'
-        coverage = SimpleCov.result.covered_percent
-        fail "Spec coverage was only #{coverage}%" if coverage < 100.0
-        RakeNBake::AssistantBaker.log_passed "Spec coverage is at #{coverage}%"
+        coverage_dir = 'log/coverage/spec'
+        set_coverage_dir(coverage_dir)
+        check_coverage_level_above COVERAGE_PERCENT
       end
 
       desc 'Check coverage from Cucumber'
       task :check_cucumber do
         RakeNBake::AssistantBaker.log_step 'Checking feature coverage'
-        SimpleCov.coverage_dir 'log/coverage/features'
-        coverage = SimpleCov.result.covered_percent
-        fail "Feature coverage was only #{coverage}%" if coverage < 100.0
-        RakeNBake::AssistantBaker.log_passed "Feature coverage is at #{coverage}%"
+        coverage_dir = 'log/coverage/features'
+        set_coverage_dir(coverage_dir)
+        check_coverage_level_above COVERAGE_PERCENT
       end
     end
   end
