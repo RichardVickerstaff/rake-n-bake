@@ -3,7 +3,47 @@ require production_code
 require 'yaml'
 
 describe RakeNBake::SemverVersioning do
-  let(:version) {
+  def project_root_file name
+    File.join(File.dirname(__FILE__), '..', name)
+  end
+
+  def backup_file name
+    file = project_root_file(name)
+    @backups ||= {}
+    @backups[name] = File.read(file) if File.exist?(file)
+  end
+
+  def restore_file name
+    file = project_root_file(name)
+    File.write(file, @backups[name]) unless @backups[name].nil?
+  end
+
+  def remove_file name
+    file = project_root_file name
+    FileUtils.rm file, force: true
+  end
+
+  before(:all) do
+    backup_file '.semver'
+    backup_file 'history.rdoc'
+  end
+
+  after(:all) do
+    restore_file '.semver'
+    restore_file 'history.rdoc'
+  end
+
+  before(:each) do
+    remove_file '.semver'
+    remove_file 'history.rdoc'
+  end
+
+  after(:each) do
+    remove_file '.semver'
+    remove_file 'history.rdoc'
+  end
+
+  let(:version) do
     {
       major: '1',
       minor: '2',
@@ -11,32 +51,8 @@ describe RakeNBake::SemverVersioning do
       special: '',
       metadata: ''
     }
-  }
-  before(:all) do
-    if File.exist? File.join(File.dirname(__FILE__), '../.semver')
-      @current_semver_file = File.read(File.join(File.dirname(__FILE__), '../.semver'), force: true)
-    end
-    if File.exist? File.join(File.dirname(__FILE__), '../history.rdoc')
-      @current_history_file = File.read(File.join(File.dirname(__FILE__), '../history.rdoc'), force: true)
-    end
   end
 
-  after(:all) do
-    if @current_semver_file
-      File.write(File.join(File.dirname(__FILE__), '../.semver'), @current_semver_file, force: true)
-    end
-    if @current_history_file
-      File.write(File.join(File.dirname(__FILE__), '../history.rdoc'), @current_history_file, force: true)
-    end
-  end
-  before(:each) do
-    FileUtils.rm(File.join(File.dirname(__FILE__), '../.semver'), force: true)
-    FileUtils.rm(File.join(File.dirname(__FILE__), '../history.rdoc'), force: true)
-  end
-  after(:each) do
-    FileUtils.rm(File.join(File.dirname(__FILE__), '../.semver'), force: true)
-    FileUtils.rm(File.join(File.dirname(__FILE__), '../history.rdoc'), force: true)
-  end
   describe '#current_version' do
     context 'when there is no .semver file' do
       it 'returns the current version' do
