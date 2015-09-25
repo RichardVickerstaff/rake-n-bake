@@ -1,3 +1,5 @@
+== v1.3.1 (25 September 2015)
+
 * Fix SimpleCov task (was showing 100% coverage when report was missing; now fails with helpful error)
 
 == v1.3.0 (17 August 2015)
