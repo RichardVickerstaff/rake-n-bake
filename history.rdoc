@@ -1,4 +1,8 @@
+* Fix SimpleCov task (was showing 100% coverage when report was missing; now fails with helpful error)
+
 == v1.3.0 (17 August 2015)
+
+* Add more metrics tasks (MetricFu, Rubocop, Fasterer, Brakeman, RubyCritic)
 
 == v1.2.0 (28 June 2015)
 
