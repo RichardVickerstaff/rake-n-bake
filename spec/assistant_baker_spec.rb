@@ -19,7 +19,7 @@ describe RakeNBake::AssistantBaker do
     end
 
     it 'prints an attractive dot before the message' do
-      expect{described_class.log_warn 'Foo'}.to output(/● Foo/).to_stdout
+      expect{described_class.log_warn 'Foo'}.to output(/! Foo/).to_stdout
     end
   end
 

@@ -13,8 +13,8 @@ module RakeNBake
 
     def self.log_warn message
       puts Term::ANSIColor.red +
-        Term::ANSIColor.underline +
-        '● ' +
+        Term::ANSIColor.bold +
+        '! ' +
         message +
         Term::ANSIColor.reset
     end
