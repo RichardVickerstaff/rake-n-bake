@@ -26,14 +26,38 @@ namespace :bake do
 
   desc 'Print the "ALL TESTS PASSED" message WITH A SWEET RAINBOW!!!'
   task :ok_rainbow do
+    sement_size = [ "--", "---", "-----", "----------", "-----", "---", "--"]
+    rows = [
+      [ :clear,   :clear,   :clear,   :red,     :clear,   :clear,             :clear ],
+      [ :clear,   :clear,   :red,     :yellow,  :red,     :clear,             :clear ],
+      [ :clear,   :red,     :yellow,  :green,   :yellow,  :red,               :clear ],
+      [ :red,     :yellow,  :green,   :blue,    :green,   :yellow,            :red ],
+      [ :yellow,  :green,   :blue,    :magenta, :blue,    :green,             :yellow ],
+      [ :green,   :blue,    :magenta, :clear,   :magenta, :blue,              :green ],
+      [ :blue,    :magenta, :clear,   :clear,   :clear,   :magenta,           :blue ],
+      [ :magenta, :text,    :text,    :text,    :text,    "ALL TESTS PASSED", :magenta ],
+    ]
+
     puts
-    print C.clear(    "  "),  C.clear(     "   "),  C.clear(     "    "),       C.on_red(    "                  "), C.clear(     "    "), C.clear(     "   "), C.clear(     "  "),"\n"
-    print C.clear(    "  "),  C.clear(     "   "),  C.on_red(    "    "),       C.on_yellow( "                  "), C.on_red(    "    "), C.clear(     "   "), C.clear(     "  "),"\n"
-    print C.clear(    "  "),  C.on_red(    "   "),  C.on_yellow( "    "),       C.on_green(  "                  "), C.on_yellow( "    "), C.on_red(    "   "), C.clear(     "  "),"\n"
-    print C.on_red(   "  "),  C.on_yellow( "   "),  C.on_green(  "    "),       C.on_blue(   "                  "), C.on_green(  "    "), C.on_yellow( "   "), C.on_red(    "  "),"\n"
-    print C.on_yellow("  "),  C.on_green(  "   "),  C.on_blue(   "    "),       C.on_magenta("                  "), C.on_blue(   "    "), C.on_green(  "   "), C.on_yellow( "  "),"\n"
-    print C.on_green( "  "),  C.on_blue(   "   "),  C.on_magenta("    "),       C.clear(     "                  "), C.on_magenta("    "), C.on_blue(   "   "), C.on_green(  "  "),"\n"
-    print C.on_blue(  "  "),  C.on_magenta("   "),  C.clear(     "    "), C.bold, C.green(   " ALL TESTS PASSED "), C.clear(     "    "), C.on_magenta("   "), C.on_blue(   "  "),"\n"
+    rows.each do |row|
+      text_block_length = 0
+      sement_size.zip(row).each do |size, colour|
+        string = size.gsub('-',' ')
+        case colour
+        when :clear
+          print C.clear(string)
+        when :text
+          text_block_length += size.length
+        when String
+          text_block_length += size.length
+          print C.bold, C.green(colour.center(text_block_length)), C.clear
+        else
+          cmd = "on_#{colour}".to_sym
+          print C.send(cmd, string)
+        end
+      end
+      puts
+    end
     puts C.reset
   end
 end
