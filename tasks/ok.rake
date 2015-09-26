@@ -26,16 +26,17 @@ namespace :bake do
 
   desc 'Print the "ALL TESTS PASSED" message WITH A SWEET RAINBOW!!!'
   task :ok_rainbow do
-    sement_size = [ "--", "---", "-----", "----------", "-----", "---", "--"]
+    title = "ALL TESTS PASSED"
+    sement_size = %w[ - -- --- ----- ----------- ----- --- -- - ]
     rows = [
-      [ :clear,   :clear,   :clear,   :red,     :clear,   :clear,             :clear ],
-      [ :clear,   :clear,   :red,     :yellow,  :red,     :clear,             :clear ],
-      [ :clear,   :red,     :yellow,  :green,   :yellow,  :red,               :clear ],
-      [ :red,     :yellow,  :green,   :blue,    :green,   :yellow,            :red ],
-      [ :yellow,  :green,   :blue,    :magenta, :blue,    :green,             :yellow ],
-      [ :green,   :blue,    :magenta, :clear,   :magenta, :blue,              :green ],
-      [ :blue,    :magenta, :clear,   :clear,   :clear,   :magenta,           :blue ],
-      [ :magenta, :text,    :text,    :text,    :text,    "ALL TESTS PASSED", :magenta ],
+      [ :clear,  :clear,   :clear,   :clear,   :red,     :clear,   :clear,   :clear,   :clear  ],
+      [ :clear,  :clear,   :clear,   :red,     :yellow,  :red,     :clear,   :clear,   :clear  ],
+      [ :clear,  :clear,   :red,     :yellow,  :green,   :yellow,  :red,     :clear,   :clear  ],
+      [ :clear,  :red,     :yellow,  :green,   :blue,    :green,   :yellow,  :red,     :clear  ],
+      [ :red,    :yellow,  :green,   :blue,    :magenta, :blue,    :green,   :yellow,  :red    ],
+      [ :yellow, :green,   :blue,    :magenta, :clear,   :magenta, :blue,    :green,   :yellow ],
+      [ :green,  :blue,    :magenta, :clear,   :clear,   :clear,   :magenta, :blue,    :green  ],
+      [ :blue,   :magenta, :text,    :text,    :text,    :text,    title,    :magenta, :blue   ],
     ]
 
     puts
