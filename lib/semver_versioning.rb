@@ -52,17 +52,11 @@ module RakeNBake
     end
 
     def self.update_history_file
-      supported_history_files = %w[ history.rdoc CHANGELOG.md ]
-      supported_history_files
-        .select {|histf| File.exist? histf}
-        .map do |histf|
-          current_history = File.read histf
-          File.open histf, 'w' do |f|
-            f.puts "== #{current_version} (#{Time.now.strftime "%d %B %Y"})"
-            f.puts
-            f.print current_history
-          end
-          `git add #{histf}`
+      %w[ history.rdoc CHANGELOG.md ]
+        .select {|file| File.exist? file}
+        .each do |file|
+          add_version_to_top(file)
+          `git add #{file}`
         end
     end
 
@@ -71,6 +65,15 @@ module RakeNBake
       `git add .semver && git commit -m 'Increment version to #{v}' && git tag #{v} -a -m '#{Time.now}'`
       branch = `git symbolic-ref HEAD`[%r{.*/(.*)}, 1]
       puts "To push the new tag, use 'git push origin #{branch} --tags'"
+    end
+
+    def self.add_version_to_top file
+      current_history = File.read file
+      File.open file, 'w' do |f|
+        f.puts "== #{current_version} (#{Time.now.strftime "%d %B %Y"})"
+        f.puts
+        f.print current_history
+      end
     end
   end
 end
