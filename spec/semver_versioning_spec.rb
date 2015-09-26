@@ -131,6 +131,30 @@ describe RakeNBake::SemverVersioning do
     end
   end
 
+  describe '#update_version_rb' do
+    before { File.write(project_root_file('.semver'), YAML.dump(version)) }
+
+    around do |example|
+      FileUtils.cp 'lib/version.rb', 'lib/version.rb.orig'
+      example.run
+      FileUtils.mv 'lib/version.rb.orig', 'lib/version.rb'
+    end
+
+    it 'writes the version into lib/version.rb' do
+      expect{ described_class.update_version_rb }
+        .to change{ File.read('lib/version.rb').include? "VERSION = '1.2.3'" }
+        .from(false)
+        .to(true)
+    end
+
+    it 'does nothing if lib/version.rb' do
+      FileUtils.rm 'lib/version.rb'
+      expect{ described_class.update_version_rb }
+        .to_not change{ File.exists? 'lib/version.rb' }
+        .from(false)
+    end
+  end
+
   describe 'tag' do
     before { File.write(project_root_file('.semver'), YAML.dump(version)) }
 

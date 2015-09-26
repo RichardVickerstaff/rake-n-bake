@@ -60,6 +60,14 @@ module RakeNBake
         end
     end
 
+    def self.update_version_rb
+      return unless File.exists?('lib/version.rb')
+      version = current_version.to_s.sub(/^v/,'')
+      version_string = "VERSION = '#{version}'"
+      version_file_content = File.read('lib/version.rb').sub(/VERSION = .*$/, version_string)
+      File.write('lib/version.rb', version_file_content)
+    end
+
     def self.tag
       v = current_version.to_s
       `git add .semver && git commit -m 'Increment version to #{v}' && git tag #{v} -a -m '#{Time.now}'`

@@ -14,6 +14,7 @@ begin
       task :major do
         RakeNBake::SemverVersioning.inc_major
         RakeNBake::SemverVersioning.update_history_file
+        RakeNBake::SemverVersioning.update_version_rb
         RakeNBake::SemverVersioning.tag
       end
 
@@ -21,6 +22,7 @@ begin
       task :minor do
         RakeNBake::SemverVersioning.inc_minor
         RakeNBake::SemverVersioning.update_history_file
+        RakeNBake::SemverVersioning.update_version_rb
         RakeNBake::SemverVersioning.tag
       end
 
@@ -28,22 +30,16 @@ begin
       task :patch do
         RakeNBake::SemverVersioning.inc_patch
         RakeNBake::SemverVersioning.update_history_file
+        RakeNBake::SemverVersioning.update_version_rb
         RakeNBake::SemverVersioning.tag
       end
 
-      desc 'Add or modify the current prerelease version (eg 1.2.3-rc1 => 1.2.3-rc2'
+      desc 'Add or modify the current prerelease version (eg 1.2.3-rc1 => 1.2.3-rc2)'
       task :prerelease, [:version] do |task, args|
         version = args[:version] || fail("Invalid usage: rake bake:semver:prerelase['release name']")
         RakeNBake::SemverVersioning.prerelease version
         RakeNBake::SemverVersioning.update_history_file
-        RakeNBake::SemverVersioning.tag
-      end
-
-      desc 'Increment major version and add a prerelease version (eg 1.2.3 => 2.0.0-rc1)'
-      task :inc_prerelease, [:version] do |task, args|
-        version = args[:version] || fail("Invalid usage: rake bake:semver:inc_prerelase['release name']")
-        RakeNBake::SemverVersioning.inc_prerelease version
-        RakeNBake::SemverVersioning.update_history_file
+        RakeNBake::SemverVersioning.update_version_rb
         RakeNBake::SemverVersioning.tag
       end
 
@@ -51,6 +47,7 @@ begin
       task :release do
         RakeNBake::SemverVersioning.release
         RakeNBake::SemverVersioning.update_history_file
+        RakeNBake::SemverVersioning.update_version_rb
         RakeNBake::SemverVersioning.tag
       end
     end
