@@ -14,6 +14,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rubocop'
   gem 'rubycritic'
+  gem 'pry-byebug'
   gem 'semver2'
   gem 'simplecov'
   gem 'term-ansicolor', '~> 1.3'
