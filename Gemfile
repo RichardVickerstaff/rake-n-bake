@@ -9,6 +9,8 @@ group :development, :test do
   gem 'bundler-audit'
   gem 'cucumber'
   gem 'fasterer'
+  gem 'guard-bundler'
+  gem 'guard-rspec'
   gem 'metric_fu'
   gem 'rake'
   gem 'rspec'
