@@ -84,8 +84,10 @@ describe RakeNBake::SemverVersioning do
     before { File.write(semver, YAML.dump( version.merge(special: "rc5") )) }
 
     it 'removes the prerelease' do
-      described_class.release
-      expect(described_class.current_version.to_s).to eq 'v1.2.3'
+      expect{ described_class.release }
+        .to change{ described_class.current_version.to_s}
+        .from('v1.2.3-rc5')
+        .to('v1.2.3')
     end
   end
 
