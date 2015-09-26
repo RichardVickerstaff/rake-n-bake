@@ -138,6 +138,7 @@ describe RakeNBake::SemverVersioning do
       FileUtils.cp 'lib/version.rb', 'lib/version.rb.orig'
       example.run
       FileUtils.mv 'lib/version.rb.orig', 'lib/version.rb'
+      `git reset lib/version.rb`
     end
 
     it 'writes the version into lib/version.rb' do
@@ -152,6 +153,13 @@ describe RakeNBake::SemverVersioning do
       expect{ described_class.update_version_rb }
         .to_not change{ File.exists? 'lib/version.rb' }
         .from(false)
+    end
+
+    it 'stages to change lib/version.rb to git' do
+      expect{ described_class.update_version_rb }
+        .to change{ `git status`.include? 'lib/version.rb' }
+        .from(false)
+        .to(true)
     end
   end
 

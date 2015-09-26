@@ -66,6 +66,7 @@ module RakeNBake
       version_string = "VERSION = '#{version}'"
       version_file_content = File.read('lib/version.rb').sub(/VERSION = .*$/, version_string)
       File.write('lib/version.rb', version_file_content)
+      `git add lib/version.rb`
     end
 
     def self.tag
