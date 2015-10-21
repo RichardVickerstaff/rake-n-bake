@@ -3,15 +3,15 @@ begin
 
   namespace :bake do
     desc 'Check Gemfile.lock for security issues'
-    task :bundler_audit do
+    task :'bundle-audit' do
       RakeNBake::AssistantBaker.log_step 'Checking gems for known security warnings'
-      Bundler::Audit::CLI.start
+      exit 1 unless system('bundle exec bundle-audit')
     end
   end
 
 rescue LoadError
 
-  tasks = %w[bundler_audit].map(&:to_sym)
+  tasks = %w[bundle-audit].map(&:to_sym)
 
   namespace :bake do
     tasks.each do |t|

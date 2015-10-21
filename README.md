@@ -39,7 +39,7 @@ task :default => [
   :"bake:code_quality:all",
   :"bake:rspec",
   :"bake:coverage:check_specs",
-  :"bake:bundler_audit",
+  :"bake:bundle-audit",
   :"bake:rubocop",
   :"bake:rubycritic",
   :"bake:ok_rainbow",
@@ -54,7 +54,7 @@ Tasks are namespaced under `:bake` to prevent clashes. For example, the `:ok` ta
 ### :brakeman
 Run [Brakeman](http://brakemanscanner.org/) to look for security issues on a Rails project
 
-### :bundler_audit
+### :bundle-audit
 Check the current Gemfile.lock for gem versions with known security issues, courtesy of [Bundler Audit](https://github.com/rubysec/bundler-audit#readme)
 
 ### :check_external_dependencies
