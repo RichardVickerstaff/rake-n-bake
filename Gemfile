@@ -21,4 +21,5 @@ group :development, :test do
   gem 'simplecov'
   gem 'term-ansicolor', '~> 1.3'
   gem 'timecop'
+  gem 'traceroute'
 end

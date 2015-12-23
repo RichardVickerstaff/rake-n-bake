@@ -119,6 +119,9 @@ Runs [Rubocop](https://github.com/bbatsov/rubocop) over the project and lists vi
 ### :rubycritic
 Runs the [RubyCritic](https://github.com/whitesmith/rubycritic) tool and generates a report about the health of your code
 
+### :traceroute
+Runs [Traceroute](https://rubygems.org/gems/traceroute), a tool for finding unused routes within [Rails](http://rubyonrails.org/) apps
+
 Handy Tips for new tasks
 ------------------------
 - All tasks loaded by `lib/rake_n_bake.rb` will have access to the `RakeNBake::AssistantBaker`. This is intended for truely common things, like logging out when a particular step runs or passes.
