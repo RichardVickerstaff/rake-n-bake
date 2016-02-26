@@ -148,7 +148,7 @@ describe RakeNBake::SemverVersioning do
         .to(true)
     end
 
-    it 'does nothing if lib/version.rb' do
+    it 'does nothing if lib/version.rb does not exist' do
       FileUtils.rm 'lib/version.rb'
       expect{ described_class.update_version_rb }
         .to_not change{ File.exists? 'lib/version.rb' }

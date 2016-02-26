@@ -3,4 +3,5 @@
 /bin/*
 *.gem
 *.sw?
+*.orig
 Gemfile.lock
