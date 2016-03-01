@@ -7,7 +7,7 @@ begin
 
       desc "Display the latest version (from .semver)"
       task :version do
-        RakeNBake::SemverVersioning.current_version
+        puts RakeNBake::SemverVersioning.current_version
       end
 
       desc 'Increment major version in .semver (eg 1.2.3 => 2.0.0)'
