@@ -4,8 +4,11 @@ begin
   namespace :bake do
     desc 'Check Gemfile.lock for security issues'
     task :'bundle-audit' do
+      RakeNBake::AssistantBaker.log_step 'Updating DB of security advisories'
+      system('bundle exec bundle-audit update')
+
       RakeNBake::AssistantBaker.log_step 'Checking gems for known security warnings'
-      exit 1 unless system('bundle exec bundle-audit')
+      exit 1 unless system('bundle exec bundle-audit check')
     end
   end
 
