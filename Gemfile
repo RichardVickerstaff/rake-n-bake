@@ -8,6 +8,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'bundler-audit'
   gem 'cucumber'
+  gem 'docker'
   gem 'fasterer'
   gem 'guard-bundler'
   gem 'guard-rspec'
