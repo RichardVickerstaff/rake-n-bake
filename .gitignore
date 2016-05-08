@@ -5,3 +5,5 @@
 *.sw?
 *.orig
 Gemfile.lock
+docker_db.json
+docker_db.json.example
