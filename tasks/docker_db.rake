@@ -77,7 +77,7 @@ begin
       desc 'Build the docker image for all databases'
       task :build do
         RakeNBake::AssistantBaker.log_step 'Building Docker container'
-        DDB.build_container
+        DDB.build_image
       end
 
       desc 'Write an example docker_db config file'

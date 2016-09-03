@@ -23,36 +23,41 @@ module RakeNBake
         "image_name" => "my_docker_image",
         "db_ready_log_message" => 'Database listening',
         "environments" => {
-          "dev" => {
-            "name" => "my-project-dev-db",
-            "ports" => { 22 => 49100, 1521 => 49101 },
-            "rails_env" => 'development'
-          },
-          "test" => {
-            "name" => "my-project-test-db",
-            "ports" => { 22 => 49200, 1521 => 49201 },
-            "rails_env" => 'development'
-          },
+        "dev" => {
+          "name" => "my-project-dev-db",
+          "ports" => { 22 => 49100, 1521 => 49101 },
+          "rails_env" => 'development'
         },
+        "test" => {
+          "name" => "my-project-test-db",
+          "ports" => { 22 => 49200, 1521 => 49201 },
+          "rails_env" => 'development'
+        },
+      },
       }
       json_config = JSON.pretty_generate(example_config)
       File.write(path, json_config)
       RakeNBake::AssistantBaker.log_passed "Example config written to #{path}. Copy to #{CONFIG_PATH} and edit it"
     end
 
-    def build_container
+    def build_image
+      image = db_config["image_name"]
+      if image_exists?
+        puts "Docker already has an image called #{image}, remove it with 'docker rm #{image}' and run this again if you want to force recreation" and return
+      end
       image = Docker::Image.build_from_dir(DB_DOCKERFILE)
-      image.tag('repo' => IMAGE_NAME, 'tag' => 'latest')
+      image.tag('repo' => image, 'tag' => 'latest')
     end
 
     def start_db env
+      image = db_config["image_name"]
       config = db_config.fetch( env.to_sym )
       exposed_ports = config[:ports].each_with_object({}){|(guest, _host), out| out["#{guest}/tcp"] = {} } 
       port_bindings = config[:ports].each_with_object({}){|(guest,  host), out| out["#{guest}/tcp"] = [{ "HostPort" => "#{host}" }] }
       container = Docker::Container.create(
         {
           'name' => config[:name],
-          'Image' => IMAGE_NAME,
+          'Image' => image,
           'ExposedPorts' => exposed_ports ,
           'PortBindings' => port_bindings
         }
@@ -80,6 +85,10 @@ module RakeNBake
       sleep 2
       start_db env
       wait_for_db_to_start env
+    end
+
+    def image_exists? image
+      Docker::Image.all.include? image
     end
 
     def container_ready? env
