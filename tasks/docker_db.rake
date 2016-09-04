@@ -94,7 +94,7 @@ rescue LoadError
       %w[ start stop restart start_dev start_test stop_dev stop_test restart_dev restart_test build prepare_test_db example_config].map(&:to_sym).each do |t|
         desc 'docker_db rake tasks are not available (gem not installed)'
         task t do
-          RakeNBake::AssistantBaker.log_missing_gem 'Docker API', 'docker'
+          RakeNBake::AssistantBaker.log_missing_gem 'Docker API', 'docker-api'
           abort
         end
       end

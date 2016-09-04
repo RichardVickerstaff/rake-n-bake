@@ -21,21 +21,21 @@ module RakeNBake
     def write_example_config
       path = CONFIG_PATH + '.example'
       example_config = {
-        "db_dockerfile" => "dev/database-dockerfile",
+        "docker_build_dir" => "dev/database-dockerfile",
         "image_name" => "my_docker_image",
         "db_ready_log_message" => 'Database listening',
         "environments" => {
-        "dev" => {
-          "name" => "my-project-dev-db",
-          "ports" => { 22 => 49100, 1521 => 49101 },
-          "rails_env" => 'development'
+          "dev" => {
+            "name" => "my-project-dev-db",
+            "ports" => { 22 => 49100, 1521 => 49101 },
+            "rails_env" => 'development'
+          },
+          "test" => {
+            "name" => "my-project-test-db",
+            "ports" => { 22 => 49200, 1521 => 49201 },
+            "rails_env" => 'development'
+          },
         },
-        "test" => {
-          "name" => "my-project-test-db",
-          "ports" => { 22 => 49200, 1521 => 49201 },
-          "rails_env" => 'development'
-        },
-      },
       }
       json_config = JSON.pretty_generate(example_config)
       File.write(path, json_config)
@@ -43,21 +43,21 @@ module RakeNBake
     end
 
     def build_image
-      image = db_config["image_name"]
+      image_name = db_config["image_name"]
       if image_exists?
-        LOGGER.log_warn "Docker already has an image called #{image}, remove it with 'docker rm #{image}' and run this again if you want to force recreation" and fail
+        LOGGER.log_warn "Docker already has an image called #{image_name}, remove it with 'docker rm #{image_name}' and run this again if you want to force recreation" and fail
       end
       LOGGER.log_step "Building docker image"
-      image = Docker::Image.build_from_dir(DB_DOCKERFILE)
-      image.tag('repo' => image, 'tag' => 'latest')
+      image = Docker::Image.build_from_dir(db_config['docker_build_dir'])
+      image.tag('repo' => image_name, 'tag' => 'latest')
     end
 
     def build_container env
       image = db_config["image_name"]
-      config = db_config.fetch( env.to_sym )
-      exposed_ports = config[:ports].each_with_object({}){|(guest, _host), out| out["#{guest}/tcp"] = {} } 
-      port_bindings = config[:ports].each_with_object({}){|(guest,  host), out| out["#{guest}/tcp"] = [{ "HostPort" => "#{host}" }] }
-      LOGGER.log_step("Building container '#{config[:name]}'")
+      config = db_env(env)
+      exposed_ports = config["ports"].each_with_object({}){|(guest, _host), out| out["#{guest}/tcp"] = {} }
+      port_bindings = config["ports"].each_with_object({}){|(guest,  host), out| out["#{guest}/tcp"] = [{ "HostPort" => "#{host}" }] }
+      LOGGER.log_step("Building container '#{config["name"]}'")
       Docker::Container.create(
         {
           'name' => config[:name],
@@ -75,8 +75,8 @@ module RakeNBake
     end
 
     def stop_db env
-      config = db_config.fetch( env.to_sym )
-      container = Docker::Container.get( config.fetch(:name) ) rescue nil
+      config = db_env(env)
+      container = Docker::Container.get( config.fetch("name") ) rescue nil
       if container
         container.kill
         container.remove
@@ -84,8 +84,8 @@ module RakeNBake
     end
 
     def get_container_for env
-      config = db_config.fetch( env.to_sym )
-      name = config[:name]
+      config = db_env(env)
+      name = config["name"]
       Docker::Container.get(name) rescue nil
     end
 
@@ -96,8 +96,16 @@ module RakeNBake
       wait_for_db_to_start env
     end
 
-    def image_exists? image
-      Docker::Image.all.include? image
+    private def image_name
+      db_config["image_name"]
+    end
+
+    private def db_env env
+      db_config.fetch("environments").fetch(env.to_s)
+    end
+
+    private def image_exists?
+      Docker::Image.exist? image_name
     end
 
     def container_ready? env
@@ -139,11 +147,11 @@ module RakeNBake
 
     def prepare_db env
       rails_env = db_config.fetch( env.to_sym ).fetch(:rails_env)
-      RakeNBake::AssistantBaker.log_step 'Checking that the DB is running'
+      LOGGER.log_step 'Checking that the DB is running'
       restart_if_needed env
       puts "OK"
       puts
-      RakeNBake::AssistantBaker.log_step 'Resetting DB'
+      LOGGER.log_step 'Resetting DB'
       system("bundle exec rake db:reset RAILS_ENV=#{rails_env}")
       puts
     end
