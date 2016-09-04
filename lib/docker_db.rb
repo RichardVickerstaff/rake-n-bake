@@ -5,13 +5,15 @@ module RakeNBake
   class DockerDb
 
     CONFIG_PATH = './docker_db.json'
+    LOGGER = RakeNBake::AssistantBaker
 
     def db_config
+      return $CONFIG unless $CONFIG.nil?
       if File.exists?(CONFIG_PATH)
-        JSON.parse(File.read(CONFIG_PATH))
+        $CONFIG = JSON.parse(File.read(CONFIG_PATH))
       else
-        RakeNBake::AssistantBaker::log_warn "No docker_db config file found at #{CONFIG_PATH}, so cannot continue"
-        RakeNBake::AssistantBaker::log_warn "Check the path, or run `rake bake:docker_db:example_config` to write an example config file"
+        LOGGER.log_warn "No docker_db config file found at #{CONFIG_PATH}, so cannot continue"
+        LOGGER.log_warn "Check the path, or run `rake bake:docker_db:example_config` to write an example config file"
         abort
       end
     end
@@ -37,24 +39,26 @@ module RakeNBake
       }
       json_config = JSON.pretty_generate(example_config)
       File.write(path, json_config)
-      RakeNBake::AssistantBaker.log_passed "Example config written to #{path}. Copy to #{CONFIG_PATH} and edit it"
+      LOGGER.log_passed "Example config written to #{path}. Copy to #{CONFIG_PATH} and edit it"
     end
 
     def build_image
       image = db_config["image_name"]
       if image_exists?
-        puts "Docker already has an image called #{image}, remove it with 'docker rm #{image}' and run this again if you want to force recreation" and return
+        LOGGER.log_warn "Docker already has an image called #{image}, remove it with 'docker rm #{image}' and run this again if you want to force recreation" and fail
       end
+      LOGGER.log_step "Building docker image"
       image = Docker::Image.build_from_dir(DB_DOCKERFILE)
       image.tag('repo' => image, 'tag' => 'latest')
     end
 
-    def start_db env
+    def build_container env
       image = db_config["image_name"]
       config = db_config.fetch( env.to_sym )
       exposed_ports = config[:ports].each_with_object({}){|(guest, _host), out| out["#{guest}/tcp"] = {} } 
       port_bindings = config[:ports].each_with_object({}){|(guest,  host), out| out["#{guest}/tcp"] = [{ "HostPort" => "#{host}" }] }
-      container = Docker::Container.create(
+      LOGGER.log_step("Building container '#{config[:name]}'")
+      Docker::Container.create(
         {
           'name' => config[:name],
           'Image' => image,
@@ -62,6 +66,11 @@ module RakeNBake
           'PortBindings' => port_bindings
         }
       )
+    end
+
+    def start_db env
+      build_image unless image_exists?
+      container = get_container_for(env) || build_container(env)
       container.start
     end
 
