@@ -51,6 +51,12 @@ Tasks
 -----
 Tasks are namespaced under `:bake` to prevent clashes. For example, the `:ok` task is called by invoking `:bake:ok`
 
+For a definitive list, run `rake -D` to see all Rake tasks.
+You could also see only the Rake-n-Bake tasks by running `rake -D | grep -A3 'bake'`.
+
+Below are some highlights of the tasks added.
+Each can be invoked with `rake bake<task name>`, for example `rake bake:brakeman`
+
 ### :brakeman
 Run [Brakeman](http://brakemanscanner.org/) to look for security issues on a Rails project
 
