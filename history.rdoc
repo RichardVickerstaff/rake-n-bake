@@ -1,3 +1,7 @@
+== v1.4.1 (08 September 2016)
+
+* Update Rake dependency
+
 == v1.4.0 (09 April 2016)
 
 * Make bundle-audit update ruby-advisory-db
