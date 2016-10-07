@@ -62,7 +62,7 @@ rescue LoadError
       tasks.each do |t|
         desc 'SemVer rake tasks are not available (gem not installed)'
         task t do
-          RakeNBake::AssistantBaker.log_missing_gem 'semver2'
+          RakeNBake::Baker.log_missing_gem 'semver2'
           abort
         end
       end

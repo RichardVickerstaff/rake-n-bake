@@ -2,7 +2,7 @@
 require 'term/ansicolor'
 
 module RakeNBake
-  class AssistantBaker
+  class Baker
     def self.log_step message
       puts Term::ANSIColor.blue +
         Term::ANSIColor.underline +

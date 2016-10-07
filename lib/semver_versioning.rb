@@ -1,4 +1,5 @@
 require 'semver'
+
 module RakeNBake
   class SemverVersioning
     def self.current_version
@@ -86,4 +87,3 @@ module RakeNBake
     end
   end
 end
-

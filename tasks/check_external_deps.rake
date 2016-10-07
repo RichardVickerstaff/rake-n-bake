@@ -4,7 +4,7 @@ namespace :bake do
   task :check_external_dependencies do
     checker = RakeNBake::DependencyChecker.new(@external_dependencies)
 
-    RakeNBake::AssistantBaker.log_step 'Checking external dependencies'
+    RakeNBake::Baker.log_step 'Checking external dependencies'
     checker.check
     puts
 

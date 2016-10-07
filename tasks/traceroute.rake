@@ -13,7 +13,7 @@ if defined? Rails
       tasks.map(&:to_sym).each do |t|
         desc 'Traceroute is not available (gem not installed)'
         task t do
-          RakeNBake::AssistantBaker.log_missing_gem 'traceroute'
+          RakeNBake::Baker.log_missing_gem 'traceroute'
           abort
         end
       end
@@ -26,7 +26,7 @@ else
     tasks.map(&:to_sym).each do |t|
       desc 'Traceroute is not available Rails is required'
       task t do
-        RakeNBake::AssistantBaker.log_warn 'Traceroute requires rails'
+        RakeNBake::Baker.log_warn 'Traceroute requires rails'
         abort
       end
     end

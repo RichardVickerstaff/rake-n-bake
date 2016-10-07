@@ -5,7 +5,7 @@ begin
 
     desc "Run Brakeman"
     task :brakeman, :output_files do |t, args|
-      RakeNBake::AssistantBaker.log_step 'Running Brakeman'
+      RakeNBake::Baker.log_step 'Running Brakeman'
 
       files = args[:output_files].split(' ') if args[:output_files]
       Brakeman.run :app_path => ".", :output_files => files, :print_report => true
@@ -19,7 +19,7 @@ rescue LoadError
     tasks.map(&:to_sym).each do |t|
       desc 'brakeman is not available (gem not installed)'
       task t do
-        RakeNBake::AssistantBaker.log_missing_gem 'brakeman'
+        RakeNBake::Baker.log_missing_gem 'brakeman'
         abort
       end
     end

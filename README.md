@@ -130,7 +130,7 @@ Runs [Traceroute](https://rubygems.org/gems/traceroute), a tool for finding unus
 
 Handy Tips for new tasks
 ------------------------
-- All tasks loaded by `lib/rake_n_bake.rb` will have access to the `RakeNBake::AssistantBaker`. This is intended for truely common things, like logging out when a particular step runs or passes.
+- All tasks loaded by `lib/rake_n_bake.rb` will have access to the `RakeNBake::Baker`. This is intended for truely common things, like logging out when a particular step runs or passes.
 
 Contributing
 ------------

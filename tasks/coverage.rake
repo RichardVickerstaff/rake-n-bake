@@ -6,7 +6,7 @@ begin
     if File.exists?(report)
       SimpleCov.coverage_dir coverage_dir
     else
-      RakeNBake::AssistantBaker.log_warn "SimpleCov report could not be found at #{report}"
+      RakeNBake::Baker.log_warn "SimpleCov report could not be found at #{report}"
       fail
     end
   end
@@ -14,9 +14,9 @@ begin
   def check_coverage_level_above level
     coverage = SimpleCov.result.covered_percent
     if coverage >= level
-      RakeNBake::AssistantBaker.log_passed "Feature coverage is at #{coverage}%"
+      RakeNBake::Baker.log_passed "Feature coverage is at #{coverage}%"
     else
-      RakeNBake::AssistantBaker.log_warn "Spec coverage was only #{coverage}%"
+      RakeNBake::Baker.log_warn "Spec coverage was only #{coverage}%"
       fail
     end
   end
@@ -27,7 +27,7 @@ begin
 
       desc 'Check coverage from RSpec'
       task :check_specs do
-        RakeNBake::AssistantBaker.log_step 'Checking spec coverage'
+        RakeNBake::Baker.log_step 'Checking spec coverage'
         coverage_dir = 'log/coverage/spec'
         set_coverage_dir(coverage_dir)
         check_coverage_level_above COVERAGE_PERCENT
@@ -35,7 +35,7 @@ begin
 
       desc 'Check coverage from Cucumber'
       task :check_cucumber do
-        RakeNBake::AssistantBaker.log_step 'Checking feature coverage'
+        RakeNBake::Baker.log_step 'Checking feature coverage'
         coverage_dir = 'log/coverage/features'
         set_coverage_dir(coverage_dir)
         check_coverage_level_above COVERAGE_PERCENT
@@ -50,7 +50,7 @@ rescue LoadError
       %w[check_specs check_cucumber].map(&:to_sym).each do |t|
         desc 'SimpleCov rake tasks are not available (gem not installed)'
         task t do
-          RakeNBake::AssistantBaker.log_missing_gem 'simplecov', 'SimpleCov'
+          RakeNBake::Baker.log_missing_gem 'simplecov', 'SimpleCov'
           abort
         end
       end
