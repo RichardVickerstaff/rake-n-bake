@@ -134,32 +134,75 @@ describe RakeNBake::SemverVersioning do
   describe '#update_version_rb' do
     before { File.write(project_root_file('.semver'), YAML.dump(version)) }
 
-    around do |example|
-      FileUtils.cp 'lib/version.rb', 'lib/version.rb.orig'
-      example.run
-      FileUtils.mv 'lib/version.rb.orig', 'lib/version.rb'
-      `git reset lib/version.rb`
+    context 'when version.rb is in the top of the lib directory' do
+      around do |example|
+        FileUtils.cp 'lib/version.rb', 'lib/version.rb.orig'
+        example.run
+        FileUtils.mv 'lib/version.rb.orig', 'lib/version.rb'
+        `git reset lib/version.rb`
+      end
+
+      it 'writes the version into lib/version.rb' do
+        expect{ described_class.update_version_rb }
+          .to change{ File.read('lib/version.rb').include? "VERSION = '1.2.3'" }
+          .from(false)
+          .to(true)
+      end
+
+      it 'does nothing if lib/version.rb does not exist' do
+        FileUtils.rm 'lib/version.rb'
+        expect{ described_class.update_version_rb }
+          .to_not change{ File.exists? 'lib/version.rb' }
+          .from(false)
+      end
+
+      it 'stages to change lib/version.rb to git' do
+        expect{ described_class.update_version_rb }
+          .to change{ `git status`.include? 'lib/version.rb' }
+          .from(false)
+          .to(true)
+      end
     end
 
-    it 'writes the version into lib/version.rb' do
-      expect{ described_class.update_version_rb }
-        .to change{ File.read('lib/version.rb').include? "VERSION = '1.2.3'" }
-        .from(false)
-        .to(true)
-    end
+    context 'when version.rb is inside the gem directory in lib' do
+      around do |example|
+        FileUtils.mkdir 'lib/gemname/'
+        FileUtils.cp 'lib/version.rb', 'lib/gemname/version.rb'
+        FileUtils.mv 'lib/version.rb', 'lib/version.rb.orig'
+        example.run
+        FileUtils.rm_rf 'lib/gemname'
+        FileUtils.mv 'lib/version.rb.orig', 'lib/version.rb'
+        `git reset lib/version.rb`
+        `git rm lib/gemname/version.rb &>/dev/null`
+      end
 
-    it 'does nothing if lib/version.rb does not exist' do
-      FileUtils.rm 'lib/version.rb'
-      expect{ described_class.update_version_rb }
-        .to_not change{ File.exists? 'lib/version.rb' }
-        .from(false)
-    end
+      it 'writes the version into lib/gemname/version.rb' do
+        expect{ described_class.update_version_rb }
+          .to change{ File.read('lib/gemname/version.rb').include? "VERSION = '1.2.3'" }
+          .from(false)
+          .to(true)
+      end
 
-    it 'stages to change lib/version.rb to git' do
-      expect{ described_class.update_version_rb }
-        .to change{ `git status`.include? 'lib/version.rb' }
-        .from(false)
-        .to(true)
+      it 'does nothing if lib/gemname/version.rb does not exist' do
+        FileUtils.rm 'lib/gemname/version.rb'
+        expect{ described_class.update_version_rb }
+          .to_not change{ File.exists? 'lib/gemname/version.rb' }
+          .from(false)
+      end
+
+      it 'stages changes to lib/gemname/version.rb to git' do
+        expect{ described_class.update_version_rb }
+          .to change{ `git status`.include? 'lib/gemname/version.rb' }
+          .from(false)
+          .to(true)
+      end
+
+      it 'does nothing if there are multiple version.rb files found' do
+        FileUtils.cp 'lib/version.rb.orig', 'lib/version.rb'
+        described_class.update_version_rb
+        expect(`git status`).to_not match /version.rb/
+      end
+
     end
   end
 
