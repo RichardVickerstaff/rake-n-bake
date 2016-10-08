@@ -62,12 +62,16 @@ module RakeNBake
     end
 
     def self.update_version_rb
-      return unless File.exists?('lib/version.rb')
+      version_files = Dir.glob('lib{,/*}/version.rb').uniq
+      return unless version_files.size == 1
+      version_file = version_files[0]
+
       version = current_version.to_s.sub(/^v/,'')
       version_string = "VERSION = '#{version}'"
-      version_file_content = File.read('lib/version.rb').sub(/VERSION = .*$/, version_string)
-      File.write('lib/version.rb', version_file_content)
-      `git add lib/version.rb`
+      version_file_content = File.read(version_file).sub(/VERSION = .*$/, version_string)
+
+      File.write(version_file, version_file_content)
+      `git add #{version_file}`
     end
 
     def self.tag
