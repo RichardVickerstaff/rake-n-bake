@@ -1,6 +1,5 @@
 begin
   require_relative '../lib/semver_versioning'
-  require_relative '../lib/assistant_baker'
 
   namespace :bake do
     namespace :semver do
