@@ -18,6 +18,7 @@ group :development, :test do
   gem 'rubycritic'
   gem 'pry-byebug'
   gem 'semver2'
+  gem 'simplecov'
   gem 'term-ansicolor', '~> 1.3'
   gem 'timecop'
   gem 'traceroute'

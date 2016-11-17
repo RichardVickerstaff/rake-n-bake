@@ -4,7 +4,8 @@ require 'tempfile'
 require 'codeclimate-test-reporter'
 require 'aruba/rspec'
 
-CodeClimate::TestReporter.start
+require 'simplecov'
+SimpleCov.start
 
 def production_code
   spec = caller[0][/spec.+\.rb/]
