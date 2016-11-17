@@ -4,6 +4,12 @@ begin
   namespace :bake do
     require 'rubocop/rake_task'
     RuboCop::RakeTask.new
+
+    task :rubocop_announce do
+      RakeNBake::Baker.log_step "Running Rubocop"
+    end
+
+    task :rubocop => :rubocop_announce
   end
 
 rescue LoadError
