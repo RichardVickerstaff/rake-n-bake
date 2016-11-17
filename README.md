@@ -34,15 +34,14 @@ Usage
 ```ruby
 require "rake-n-bake"
 
-task :default => [
-  :clean,
-  :"bake:code_quality:all",
-  :"bake:rspec",
-  :"bake:coverage:check_specs",
-  :"bake:bundle-audit",
-  :"bake:rubocop",
-  :"bake:rubycritic",
-  :"bake:ok_rainbow",
+task :default => %i[
+  clean
+  bake:rubocop
+  bake:rspec
+  bake:coverage:check_specs
+  bake:bundle-audit
+  bake:rubycritic
+  bake:ok_rainbow
 ]
 
 ```
@@ -70,23 +69,6 @@ For example:
   @external_dependencies = ['ruby', 'postgres', 'foo']
   ```
 You can also use the underlying checker object by creating an instance of `RakeNBake::DependencyChecker` with your array of dependencies and calling `#check` or `#missing` on it.
-
-### :code_quality
-#### :all
-Runs `[:trailing_spaces, :shoulds, :debugger, :pry, :console_log]` tasks. It does not run `:time_check`
-##### :trailing_spaces
-Check for trailing spaces in `[spec, features, lib, app, factories, db]`.
-##### :shoulds
-Check for legacy 'it "should blah"' style specs
-##### :debugger
-Check for debugger statements in `[lib, app, spec, features]`.
-##### :pry
-Check for binding.pry statements in `[lib, app, spec, features]`.
-##### :console_log
-Check for console.log statements in `app/assets/javascripys`.
-##### :time_check
-Check for `Time.now` statements in `[lib, app]` (Time.zone.now is more reliable for servers wanting to use UTC).
-This check is NOT part of :all as `Time.zone.now` is an ActiveSupport method.
 
 ### :coverage
 #### :check_specs
