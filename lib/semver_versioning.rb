@@ -2,14 +2,13 @@ require 'semver'
 
 module RakeNBake
   class SemverVersioning
+
     def self.current_version
-      if File.exist? SemVer.file_name
-        SemVer.find
-      else
+      unless File.exist? SemVer.file_name
         version = SemVer.new
         version.save SemVer.file_name
-        SemVer.find
       end
+      SemVer.find
     end
 
     def self.inc_major
@@ -53,8 +52,8 @@ module RakeNBake
     end
 
     def self.update_history_file
-      %w[ history.rdoc CHANGELOG.md ]
-        .select {|file| File.exist? file}
+      %w[history.rdoc CHANGELOG.md]
+        .select { |file| File.exist? file }
         .each do |file|
           add_version_to_top(file)
           `git add #{file}`
@@ -66,7 +65,7 @@ module RakeNBake
       return unless version_files.size == 1
       version_file = version_files[0]
 
-      version = current_version.to_s.sub(/^v/,'')
+      version = current_version.to_s.sub(/^v/, '')
       version_string = "VERSION = '#{version}'"
       version_file_content = File.read(version_file).sub(/VERSION = .*$/, version_string)
 
@@ -77,17 +76,18 @@ module RakeNBake
     def self.tag
       v = current_version.to_s
       `git add .semver && git commit -m 'Increment version to #{v}' && git tag #{v} -a -m '#{Time.now}'`
-      branch = `git symbolic-ref HEAD`[%r{.*/(.*)}, 1]
+      branch = `git symbolic-ref HEAD`[%r[.*/(.*)], 1]
       puts "To push the new tag, use 'git push origin #{branch} --tags'"
     end
 
     def self.add_version_to_top file
       current_history = File.read file
       File.open file, 'w' do |f|
-        f.puts "== #{current_version} (#{Time.now.strftime "%d %B %Y"})"
+        f.puts "== #{current_version} (#{Time.now.strftime '%d %B %Y'})"
         f.puts
         f.print current_history
       end
     end
+
   end
 end

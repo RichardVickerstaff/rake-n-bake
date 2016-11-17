@@ -1,0 +1,73 @@
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'log/**/*'
+    - 'node_modules/**/*'
+
+Style/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+  EnforcedLastArgumentHashStyle: ignore_implicit
+  SupportedLastArgumentHashStyles: ignore_implicit
+
+Style/DefWithParentheses:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/MethodDefParentheses:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: false
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Style/EmptyCaseCondition:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%': '""'
+    '%i': '[]'
+    '%q': '[]'
+    '%Q': '[]'
+    '%r': '[]'
+    '%s': '[]'
+    '%w': '[]'
+    '%W': '[]'
+    '%x': '[]'
+
+Style/PredicateName:
+  NamePrefixBlacklist:
+    - is_
+    - has_
+    - have_
+    - the_
+    - a_
+    - should_
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
+
+Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*'
+  Max: 140
+  AllowURI: true

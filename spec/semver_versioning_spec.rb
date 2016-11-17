@@ -3,7 +3,7 @@ require production_code
 require 'yaml'
 
 describe RakeNBake::SemverVersioning do
-  before(:example) { SEMVER_FILES.map{|f| remove_file f} }
+  before(:example) { SEMVER_FILES.map { |f| remove_file f } }
 
   let(:changelog)    { project_root_file 'CHANGELOG.md' }
   let(:history_rdoc) { project_root_file 'history.rdoc' }
@@ -11,11 +11,11 @@ describe RakeNBake::SemverVersioning do
 
   let(:version) do
     {
-      major: '1',
-      minor: '2',
-      patch: '3',
-      special: '',
-      metadata: ''
+      major:    '1',
+      minor:    '2',
+      patch:    '3',
+      special:  '',
+      metadata: '',
     }
   end
 
@@ -81,11 +81,11 @@ describe RakeNBake::SemverVersioning do
   end
 
   describe 'release' do
-    before { File.write(semver, YAML.dump( version.merge(special: "rc5") )) }
+    before { File.write(semver, YAML.dump(version.merge(special: 'rc5'))) }
 
     it 'removes the prerelease' do
-      expect{ described_class.release }
-        .to change{ described_class.current_version.to_s}
+      expect { described_class.release }
+        .to change { described_class.current_version.to_s }
         .from('v1.2.3-rc5')
         .to('v1.2.3')
     end
@@ -94,8 +94,8 @@ describe RakeNBake::SemverVersioning do
   describe '#update_history_file' do
     context 'when there is no history file' do
       it 'does nothing' do
-        expect{ described_class.update_history_file }
-          .to_not change{ [history_rdoc, changelog].any?{|file| File.exists? file} }
+        expect { described_class.update_history_file }
+          .to_not change { [history_rdoc, changelog].any? { |file| File.exist? file } }
           .from(false)
       end
     end
@@ -111,7 +111,7 @@ describe RakeNBake::SemverVersioning do
       it 'Adds the version number and date to the top of the file and adds it to git' do
         expect(Object).to receive(:`).with('git add history.rdoc')
         described_class.update_history_file
-        expect(File.read(history_rdoc).lines.first).to eq "== v1.2.3 (#{Time.now.strftime "%d %B %Y"})\n"
+        expect(File.read(history_rdoc).lines.first).to eq "== v1.2.3 (#{Time.now.strftime '%d %B %Y'})\n"
       end
     end
 
@@ -126,7 +126,7 @@ describe RakeNBake::SemverVersioning do
       it 'Adds the version number and date to the top of the file and adds it to git' do
         expect(Object).to receive(:`).with('git add CHANGELOG.md')
         described_class.update_history_file
-        expect(File.read(changelog).lines.first).to eq "== v1.2.3 (#{Time.now.strftime "%d %B %Y"})\n"
+        expect(File.read(changelog).lines.first).to eq "== v1.2.3 (#{Time.now.strftime '%d %B %Y'})\n"
       end
     end
   end
@@ -143,22 +143,22 @@ describe RakeNBake::SemverVersioning do
       end
 
       it 'writes the version into lib/version.rb' do
-        expect{ described_class.update_version_rb }
-          .to change{ File.read('lib/version.rb').include? "VERSION = '1.2.3'" }
+        expect { described_class.update_version_rb }
+          .to change { File.read('lib/version.rb').include? "VERSION = '1.2.3'" }
           .from(false)
           .to(true)
       end
 
       it 'does nothing if lib/version.rb does not exist' do
         FileUtils.rm 'lib/version.rb'
-        expect{ described_class.update_version_rb }
-          .to_not change{ File.exists? 'lib/version.rb' }
+        expect { described_class.update_version_rb }
+          .to_not change { File.exist? 'lib/version.rb' }
           .from(false)
       end
 
       it 'stages to change lib/version.rb to git' do
-        expect{ described_class.update_version_rb }
-          .to change{ `git status`.include? 'lib/version.rb' }
+        expect { described_class.update_version_rb }
+          .to change { `git status`.include? 'lib/version.rb' }
           .from(false)
           .to(true)
       end
@@ -177,22 +177,22 @@ describe RakeNBake::SemverVersioning do
       end
 
       it 'writes the version into lib/gemname/version.rb' do
-        expect{ described_class.update_version_rb }
-          .to change{ File.read('lib/gemname/version.rb').include? "VERSION = '1.2.3'" }
+        expect { described_class.update_version_rb }
+          .to change { File.read('lib/gemname/version.rb').include? "VERSION = '1.2.3'" }
           .from(false)
           .to(true)
       end
 
       it 'does nothing if lib/gemname/version.rb does not exist' do
         FileUtils.rm 'lib/gemname/version.rb'
-        expect{ described_class.update_version_rb }
-          .to_not change{ File.exists? 'lib/gemname/version.rb' }
+        expect { described_class.update_version_rb }
+          .to_not change { File.exist? 'lib/gemname/version.rb' }
           .from(false)
       end
 
       it 'stages changes to lib/gemname/version.rb to git' do
-        expect{ described_class.update_version_rb }
-          .to change{ `git status`.include? 'lib/gemname/version.rb' }
+        expect { described_class.update_version_rb }
+          .to change { `git status`.include? 'lib/gemname/version.rb' }
           .from(false)
           .to(true)
       end
@@ -200,9 +200,8 @@ describe RakeNBake::SemverVersioning do
       it 'does nothing if there are multiple version.rb files found' do
         FileUtils.cp 'lib/version.rb.orig', 'lib/version.rb'
         described_class.update_version_rb
-        expect(`git status`).to_not match /version.rb/
+        expect(`git status`).to_not match(/version.rb/)
       end
-
     end
   end
 
@@ -216,6 +215,4 @@ describe RakeNBake::SemverVersioning do
       described_class.tag
     end
   end
-
 end
-

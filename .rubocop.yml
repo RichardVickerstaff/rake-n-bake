@@ -1,0 +1,7 @@
+---
+inherit_from:
+  - 'https://raw.githubusercontent.com/dvmtn/house_style/master/rubocop.yml'
+
+AllCops:
+  Exclude:
+    - 'lib/rake-n-bake.rb'

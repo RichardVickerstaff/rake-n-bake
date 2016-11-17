@@ -9,7 +9,7 @@ SimpleCov.start
 
 def production_code
   spec = caller[0][/spec.+\.rb/]
-  './'+ spec.gsub('_spec','').gsub(/spec/, 'lib')
+  './' + spec.gsub('_spec', '').gsub(/spec/, 'lib')
 end
 
 def project_root_file name
@@ -23,31 +23,31 @@ end
 def backup_file name
   file = project_root_file(name)
   backup = backup_file_name(name)
-  FileUtils.mv file, backup if File.exists?(file)
+  FileUtils.mv file, backup if File.exist?(file)
 end
 
 def restore_file name
   file = project_root_file(name)
   backup = backup_file_name(name)
-  FileUtils.mv backup, file if File.exists?(backup)
+  FileUtils.mv backup, file if File.exist?(backup)
 end
 
 def remove_file name
   FileUtils.rm project_root_file(name), force: true
 end
 
-SEMVER_FILES = [ '.semver', 'history.rdoc', 'CHANGELOG.md' ]
+SEMVER_FILES = ['.semver', 'history.rdoc', 'CHANGELOG.md'].freeze
 
 RSpec.configure do |config|
   config.include ArubaDoubles
 
   config.before :suite do
     Aruba::RSpec.setup
-    SEMVER_FILES.map{|f| backup_file f}
+    SEMVER_FILES.map { |f| backup_file f }
   end
 
   config.after :suite do
-    SEMVER_FILES.map{|f| restore_file f}
+    SEMVER_FILES.map { |f| restore_file f }
     Aruba::RSpec.teardown
   end
 end
@@ -57,4 +57,3 @@ SimpleCov.start do
   add_filter '/spec/'
   coverage_dir 'log/coverage/spec'
 end
-
