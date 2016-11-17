@@ -1,3 +1,5 @@
+== v2.0.0 (17 November 2016)
+
 * Remove code quality tasks (Rubocop now does all of this)
 
 == v1.4.3 (17 November 2016)
