@@ -4,7 +4,8 @@ require 'term/ansicolor'
 module RakeNBake
   class Baker
     def self.log_step message
-      puts Term::ANSIColor.blue +
+      puts "\n" +
+        Term::ANSIColor.blue +
         Term::ANSIColor.underline +
         '● ' +
         message +
