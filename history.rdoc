@@ -1,10 +1,19 @@
+== v2.0.1 (24 November 2016)
+
+* Fix version headding addition in markdown files
+
 == v2.0.0 (17 November 2016)
 
 * Remove code quality tasks (Rubocop now does all of this)
 
 == v1.4.3 (17 November 2016)
 
+* Fix internal Rubocop violations
+* Add a blank line after logging out a step
+
 == v1.4.2 (12 October 2016)
+
+* Make semver tasks update version.rb in gem projects
 
 == v1.4.1 (08 September 2016)
 
