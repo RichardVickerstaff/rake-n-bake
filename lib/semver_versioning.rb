@@ -80,10 +80,11 @@ module RakeNBake
       puts "To push the new tag, use 'git push origin #{branch} --tags'"
     end
 
-    def self.add_version_to_top file
-      current_history = File.read file
-      File.open file, 'w' do |f|
-        f.puts "== #{current_version} (#{Time.now.strftime '%d %B %Y'})"
+    def self.add_version_to_top filepath
+      heading_marker = (filepath =~ /rdoc$/) ? '==' : '##'
+      current_history = File.read filepath
+      File.open filepath, 'w' do |f|
+        f.puts "#{heading_marker} #{current_version} (#{Time.now.strftime '%d %B %Y'})"
         f.puts
         f.print current_history
       end

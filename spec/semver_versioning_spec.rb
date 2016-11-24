@@ -126,7 +126,7 @@ describe RakeNBake::SemverVersioning do
       it 'Adds the version number and date to the top of the file and adds it to git' do
         expect(Object).to receive(:`).with('git add CHANGELOG.md')
         described_class.update_history_file
-        expect(File.read(changelog).lines.first).to eq "== v1.2.3 (#{Time.now.strftime '%d %B %Y'})\n"
+        expect(File.read(changelog).lines.first).to eq "## v1.2.3 (#{Time.now.strftime '%d %B %Y'})\n"
       end
     end
   end
