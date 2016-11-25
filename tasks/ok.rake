@@ -61,4 +61,25 @@ namespace :bake do
     end
     puts C.reset
   end
+
+  begin
+    require 'terminal-notifier'
+
+    desc 'Show the test complete message using Terminal Notifier'
+    task :ok_term_notifier do
+      dir_name = File.basename(Dir.getwd)
+      TerminalNotifier.notify('All tests passed!', title: "#{dir_name} build complete!", group: dir_name, app_icon: 'Ruby' )
+    end
+
+  rescue LoadError
+    tasks = %w[ ok_term_notifier ]
+
+    tasks.map(&:to_sym).each do |t|
+      desc 'Terminal Notifier is not available (gem not installed)'
+      task t do
+        RakeNBake::Baker.log_missing_gem 'terminal-notifier'
+        abort
+      end
+    end
+  end
 end

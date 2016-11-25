@@ -1,3 +1,5 @@
+* Add Terminal Notifier OK task (bake:ok_term_notifier)
+
 == v2.0.1 (24 November 2016)
 
 * Fix version headding addition in markdown files

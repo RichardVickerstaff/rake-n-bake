@@ -22,4 +22,5 @@ group :development, :test do
   gem 'term-ansicolor', '~> 1.3'
   gem 'timecop'
   gem 'traceroute'
+  gem 'terminal-notifier'
 end
