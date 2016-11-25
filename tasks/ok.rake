@@ -68,7 +68,12 @@ namespace :bake do
     desc 'Show the test complete message using Terminal Notifier'
     task :ok_term_notifier do
       dir_name = File.basename(Dir.getwd)
-      TerminalNotifier.notify('All tests passed!', title: "#{dir_name} build complete!", group: dir_name, app_icon: 'Ruby' )
+      TerminalNotifier.notify(
+        'All tests passed!',
+        title: "#{dir_name} build complete!",
+        group: dir_name,
+        appIcon: 'https://www.ruby-lang.org/images/header-ruby-logo.png',
+      )
     end
 
   rescue LoadError
