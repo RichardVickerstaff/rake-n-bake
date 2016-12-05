@@ -48,17 +48,23 @@ module RakeNBake
       LOGGER.log_step "Building docker image"
       image = Docker::Image.build_from_dir(db_config['docker_build_dir'])
       image.tag('repo' => image_name, 'tag' => 'latest')
+      LOGGER.log_passed "Image '#{image_name}' built"
     end
 
     def build_container env
       image = db_config["image_name"]
       config = db_env(env)
+      container_name = config["name"]
+      unless container_name
+        LOGGER.log_warn("The config does not set a name for the #{env} container. docker_db cannot stop/restart containers without giving them a name, so please ammend your config.")
+        abort
+      end
       exposed_ports = config["ports"].each_with_object({}){|(guest, _host), out| out["#{guest}/tcp"] = {} }
       port_bindings = config["ports"].each_with_object({}){|(guest,  host), out| out["#{guest}/tcp"] = [{ "HostPort" => "#{host}" }] }
-      LOGGER.log_step("Building container '#{config["name"]}'")
+      LOGGER.log_step("Building container '#{container_name}'")
       Docker::Container.create(
         {
-          'name' => config[:name],
+          'name' => container_name,
           'Image' => image,
           'ExposedPorts' => exposed_ports ,
           'PortBindings' => port_bindings
@@ -70,14 +76,23 @@ module RakeNBake
       build_image unless image_exists?
       container = get_container_for(env) || build_container(env)
       container.start
+      LOGGER.log_passed "Started"
     end
 
     def stop_db env
       config = db_env(env)
-      container = Docker::Container.get( config.fetch("name") ) rescue nil
+      container_name = config["name"]
+      unless container_name
+        LOGGER.log_warn "Could not find a container for the '#{env}' environment, please check your config."
+        abort
+      end
+      container = Docker::Container.get(container_name) rescue nil
       if container
         container.kill
         container.remove
+        LOGGER.log_passed "Stopped"
+      else
+        LOGGER.log_warn "Could not find a container called '#{container_name}', please check your running containers with 'docker ps'  and check your config."
       end
     end
 

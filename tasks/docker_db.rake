@@ -22,7 +22,7 @@ begin
 
         desc "Start the #{env_name} DB container"
         task "start_#{env_name}".to_sym do
-          RakeNBake::Baker.log_step 'Starting #{env_name} DB'
+          RakeNBake::Baker.log_step "Starting #{env_name} DB"
           DDB.start_db env_name
         end
 
