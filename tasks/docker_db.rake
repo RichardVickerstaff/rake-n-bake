@@ -7,71 +7,9 @@ begin
   namespace :bake do
     namespace :docker_db do
 
-      desc 'Start the dev DB container'
-      task :start_dev do
-        RakeNBake::AssistantBaker.log_step 'Starting dev DB'
-        DDB.start_db :dev
-      end
-
-      desc 'Stop the dev DB container'
-      task :stop_dev do
-        RakeNBake::AssistantBaker.log_step 'Stopping dev DB'
-        DDB.stop_db :dev
-      end
-
-      desc 'Restart the dev DB container'
-      task :restart_dev do
-        RakeNBake::AssistantBaker.log_step 'Restarting dev DB'
-        DDB.restart_db :dev
-      end
-
-      desc 'Start the test DB container'
-      task :start_test do
-        RakeNBake::AssistantBaker.log_step 'Start test DB'
-        DDB.start_db :test
-      end
-
-      desc 'Stop the test DB container'
-      task :stop_test do
-        RakeNBake::AssistantBaker.log_step 'Stop test DB'
-        DDB.stop_db :test
-      end
-
-      desc 'Restart the test DB container'
-      task :restart_test do
-        RakeNBake::AssistantBaker.log_step 'Restarting test DB'
-        DDB.restart_db :test
-      end
-
-      desc 'Start both dev and test DB containers'
-      task :start do
-        RakeNBake::AssistantBaker.log_step 'Starting both dev and test containers'
-        DDB.start_db :dev
-        DDB.start_db :test
-      end
-
-      desc 'Stop both dev and test DB containers'
-      task :stop do
-        RakeNBake::AssistantBaker.log_step 'Stopping both dev and test containers'
-        DDB.stop_db :dev
-        DDB.stop_db :test
-      end
-
-      desc 'Restart both dev and test DB containers'
-      task :restart do
-        RakeNBake::AssistantBaker.log_step 'Restarting both dev and test containers'
-        DDB.stop_db :dev
-        DDB.stop_db :test
-        sleep 2
-        DDB.start_db :dev
-        DDB.start_db :test
-        DDB.wait_for_db_to_start :dev
-        DDB.wait_for_db_to_start :test
-      end
-
-      desc 'Check the test DB is running and start it if needs be'
-      task :prepare_test do
-        DDB.prepare_db(:test)
+      desc 'Write an example docker_db config file'
+      task :example_config do
+        DDB.write_example_config
       end
 
       desc 'Build the docker image for all databases'
@@ -80,9 +18,25 @@ begin
         DDB.build_image
       end
 
-      desc 'Write an example docker_db config file'
-      task :example_config do
-        DDB.write_example_config
+      DDB.db_config['environments'].each do |env_name, env_details|
+
+        desc "Start the #{env_name} DB container"
+        task "start_#{env_name}".to_sym do
+          RakeNBake::AssistantBaker.log_step 'Starting #{env_name} DB'
+          DDB.start_db env_name
+        end
+
+        desc "Stop the #{env_name} DB container"
+        task "stop_#{env_name}".to_sym do
+          RakeNBake::AssistantBaker.log_step "Stopping #{env_name} DB"
+          DDB.stop_db env_name
+        end
+
+        desc "Restart the #{env_name} DB container"
+        task "restart_#{env_name}".to_sym do
+          RakeNBake::AssistantBaker.log_step "Restarting #{env_name} DB"
+          DDB.restart_db env_name
+        end
       end
     end
   end
