@@ -5,7 +5,7 @@ module RakeNBake
   class DockerDb
 
     CONFIG_PATH = './docker_db.json'
-    LOGGER = RakeNBake::AssistantBaker
+    LOGGER = RakeNBake::Baker
 
     def db_config
       return $CONFIG unless $CONFIG.nil?
@@ -28,12 +28,10 @@ module RakeNBake
           "dev" => {
             "name" => "my-project-dev-db",
             "ports" => { 22 => 49100, 1521 => 49101 },
-            "rails_env" => 'development'
           },
           "test" => {
             "name" => "my-project-test-db",
             "ports" => { 22 => 49200, 1521 => 49201 },
-            "rails_env" => 'development'
           },
         },
       }
