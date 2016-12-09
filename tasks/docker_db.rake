@@ -12,30 +12,32 @@ begin
         DDB.write_example_config
       end
 
-      desc 'Build the docker image for all databases'
-      task :build do
-        RakeNBake::Baker.log_step 'Building Docker container'
-        DDB.build_image
-      end
-
-      DDB.db_config['environments'].each do |env_name, env_details|
-
-        desc "Start the #{env_name} DB container"
-        task "start_#{env_name}".to_sym do
-          RakeNBake::Baker.log_step "Starting #{env_name} DB"
-          DDB.start_db env_name
+      if DDB.config_exists?
+        desc 'Build the docker image for all databases'
+        task :build do
+          RakeNBake::Baker.log_step 'Building Docker container'
+          DDB.build_image
         end
 
-        desc "Stop the #{env_name} DB container"
-        task "stop_#{env_name}".to_sym do
-          RakeNBake::Baker.log_step "Stopping #{env_name} DB"
-          DDB.stop_db env_name
-        end
+        DDB.db_config['environments'].each do |env_name, env_details|
 
-        desc "Restart the #{env_name} DB container"
-        task "restart_#{env_name}".to_sym do
-          RakeNBake::Baker.log_step "Restarting #{env_name} DB"
-          DDB.restart_db env_name
+          desc "Start the #{env_name} DB container"
+          task "start_#{env_name}".to_sym do
+            RakeNBake::Baker.log_step "Starting #{env_name} DB"
+            DDB.start_db env_name
+          end
+
+          desc "Stop the #{env_name} DB container"
+          task "stop_#{env_name}".to_sym do
+            RakeNBake::Baker.log_step "Stopping #{env_name} DB"
+            DDB.stop_db env_name
+          end
+
+          desc "Restart the #{env_name} DB container"
+          task "restart_#{env_name}".to_sym do
+            RakeNBake::Baker.log_step "Restarting #{env_name} DB"
+            DDB.restart_db env_name
+          end
         end
       end
     end

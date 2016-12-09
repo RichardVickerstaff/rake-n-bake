@@ -7,9 +7,13 @@ module RakeNBake
     CONFIG_PATH = './docker_db.json'
     LOGGER = RakeNBake::Baker
 
+    def config_exists?
+      File.exists?(CONFIG_PATH)
+    end
+
     def db_config
       return $CONFIG unless $CONFIG.nil?
-      if File.exists?(CONFIG_PATH)
+      if config_exists?
         $CONFIG = JSON.parse(File.read(CONFIG_PATH))
       else
         LOGGER.log_warn "No docker_db config file found at #{CONFIG_PATH}, so cannot continue"
