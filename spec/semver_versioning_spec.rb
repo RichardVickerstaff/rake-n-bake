@@ -22,7 +22,7 @@ describe RakeNBake::SemverVersioning do
   describe '#current_version' do
     context 'when there is no .semver file' do
       it 'returns the current version' do
-        expect(described_class.current_version.to_s).to eq 'v0.0.0'
+        expect(subject.current_version.to_s).to eq 'v0.0.0'
       end
     end
 
@@ -30,7 +30,7 @@ describe RakeNBake::SemverVersioning do
       before { File.write(semver, YAML.dump(version)) }
 
       it 'returns the current version' do
-        expect(described_class.current_version.to_s).to eq 'v1.2.3'
+        expect(subject.current_version.to_s).to eq 'v1.2.3'
       end
     end
   end
@@ -39,8 +39,8 @@ describe RakeNBake::SemverVersioning do
     before { File.write(semver, YAML.dump(version)) }
 
     it 'increases major and resets minor and patch' do
-      described_class.inc_major
-      expect(described_class.current_version.to_s).to eq 'v2.0.0'
+      subject.inc_major
+      expect(subject.current_version.to_s).to eq 'v2.0.0'
     end
   end
 
@@ -48,8 +48,8 @@ describe RakeNBake::SemverVersioning do
     before { File.write(semver, YAML.dump(version)) }
 
     it 'increases minor and resets patch' do
-      described_class.inc_minor
-      expect(described_class.current_version.to_s).to eq 'v1.3.0'
+      subject.inc_minor
+      expect(subject.current_version.to_s).to eq 'v1.3.0'
     end
   end
 
@@ -57,8 +57,8 @@ describe RakeNBake::SemverVersioning do
     before { File.write(semver, YAML.dump(version)) }
 
     it 'increases minor and resets patch' do
-      described_class.inc_patch
-      expect(described_class.current_version.to_s).to eq 'v1.2.4'
+      subject.inc_patch
+      expect(subject.current_version.to_s).to eq 'v1.2.4'
     end
   end
 
@@ -66,8 +66,8 @@ describe RakeNBake::SemverVersioning do
     before { File.write(semver, YAML.dump(version)) }
 
     it 'sets the prerelease to the supplied string' do
-      described_class.prerelease 'something'
-      expect(described_class.current_version.to_s).to eq 'v1.2.3-something'
+      subject.prerelease 'something'
+      expect(subject.current_version.to_s).to eq 'v1.2.3-something'
     end
   end
 
@@ -75,8 +75,8 @@ describe RakeNBake::SemverVersioning do
     before { File.write(semver, YAML.dump(version)) }
 
     it 'increments major version and sets the prerelease to the supplied string' do
-      described_class.inc_prerelease 'something'
-      expect(described_class.current_version.to_s).to eq 'v2.0.0-something'
+      subject.inc_prerelease 'something'
+      expect(subject.current_version.to_s).to eq 'v2.0.0-something'
     end
   end
 
@@ -84,8 +84,8 @@ describe RakeNBake::SemverVersioning do
     before { File.write(semver, YAML.dump(version.merge(special: 'rc5'))) }
 
     it 'removes the prerelease' do
-      expect { described_class.release }
-        .to change { described_class.current_version.to_s }
+      expect { subject.release }
+        .to change { subject.current_version.to_s }
         .from('v1.2.3-rc5')
         .to('v1.2.3')
     end
@@ -94,7 +94,7 @@ describe RakeNBake::SemverVersioning do
   describe '#update_history_file' do
     context 'when there is no history file' do
       it 'does nothing' do
-        expect { described_class.update_history_file }
+        expect { subject.update_history_file }
           .to_not change { [history_rdoc, changelog].any? { |file| File.exist? file } }
           .from(false)
       end
@@ -109,8 +109,8 @@ describe RakeNBake::SemverVersioning do
       after { File.unlink(File.join(File.dirname(__FILE__), '../history.rdoc')) }
 
       it 'Adds the version number and date to the top of the file and adds it to git' do
-        expect(Object).to receive(:`).with('git add history.rdoc')
-        described_class.update_history_file
+        expect(subject).to receive(:`).with('git add history.rdoc')
+        subject.update_history_file
         expect(File.read(history_rdoc).lines.first).to eq "== v1.2.3 (#{Time.now.strftime '%d %B %Y'})\n"
       end
     end
@@ -124,8 +124,8 @@ describe RakeNBake::SemverVersioning do
       after { File.unlink(changelog) }
 
       it 'Adds the version number and date to the top of the file and adds it to git' do
-        expect(Object).to receive(:`).with('git add CHANGELOG.md')
-        described_class.update_history_file
+        expect(subject).to receive(:`).with('git add CHANGELOG.md')
+        subject.update_history_file
         expect(File.read(changelog).lines.first).to eq "## v1.2.3 (#{Time.now.strftime '%d %B %Y'})\n"
       end
     end
@@ -143,7 +143,7 @@ describe RakeNBake::SemverVersioning do
       end
 
       it 'writes the version into lib/version.rb' do
-        expect { described_class.update_version_rb }
+        expect { subject.update_version_rb }
           .to change { File.read('lib/version.rb').include? "VERSION = '1.2.3'" }
           .from(false)
           .to(true)
@@ -151,13 +151,13 @@ describe RakeNBake::SemverVersioning do
 
       it 'does nothing if lib/version.rb does not exist' do
         FileUtils.rm 'lib/version.rb'
-        expect { described_class.update_version_rb }
+        expect { subject.update_version_rb }
           .to_not change { File.exist? 'lib/version.rb' }
           .from(false)
       end
 
       it 'stages to change lib/version.rb to git' do
-        expect { described_class.update_version_rb }
+        expect { subject.update_version_rb }
           .to change { `git status`.include? 'lib/version.rb' }
           .from(false)
           .to(true)
@@ -177,7 +177,7 @@ describe RakeNBake::SemverVersioning do
       end
 
       it 'writes the version into lib/gemname/version.rb' do
-        expect { described_class.update_version_rb }
+        expect { subject.update_version_rb }
           .to change { File.read('lib/gemname/version.rb').include? "VERSION = '1.2.3'" }
           .from(false)
           .to(true)
@@ -185,13 +185,13 @@ describe RakeNBake::SemverVersioning do
 
       it 'does nothing if lib/gemname/version.rb does not exist' do
         FileUtils.rm 'lib/gemname/version.rb'
-        expect { described_class.update_version_rb }
+        expect { subject.update_version_rb }
           .to_not change { File.exist? 'lib/gemname/version.rb' }
           .from(false)
       end
 
       it 'stages changes to lib/gemname/version.rb to git' do
-        expect { described_class.update_version_rb }
+        expect { subject.update_version_rb }
           .to change { `git status`.include? 'lib/gemname/version.rb' }
           .from(false)
           .to(true)
@@ -199,7 +199,7 @@ describe RakeNBake::SemverVersioning do
 
       it 'does nothing if there are multiple version.rb files found' do
         FileUtils.cp 'lib/version.rb.orig', 'lib/version.rb'
-        described_class.update_version_rb
+        subject.update_version_rb
         expect(`git status`).to_not match(/version.rb/)
       end
     end
@@ -209,10 +209,10 @@ describe RakeNBake::SemverVersioning do
     before { File.write(project_root_file('.semver'), YAML.dump(version)) }
 
     it 'tags with the curren semver release and outputs push instructions' do
-      expect(Object).to receive(:`).with("git add .semver && git commit -m 'Increment version to v1.2.3' && git tag v1.2.3 -a -m '#{Time.now}'")
-      expect(Object).to receive(:`).with('git symbolic-ref HEAD').and_return 'refs/heads/master'
-      expect(Object).to receive(:puts).with("To push the new tag, use 'git push origin master --tags'")
-      described_class.tag
+      expect(subject).to receive(:`).with("git add .semver && git commit -m 'Increment version to v1.2.3' && git tag v1.2.3 -a -m '#{Time.now}'")
+      expect(subject).to receive(:`).with('git symbolic-ref HEAD').and_return 'refs/heads/master'
+      expect(subject).to receive(:puts).with("To push the new tag, use 'git push origin master --tags'")
+      subject.tag
     end
   end
 end

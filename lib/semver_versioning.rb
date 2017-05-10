@@ -3,7 +3,11 @@ require 'semver'
 module RakeNBake
   class SemverVersioning
 
-    def self.current_version
+    def initialize
+      @version = current_version
+    end
+
+    def current_version
       unless File.exist? SemVer.file_name
         version = SemVer.new
         version.save SemVer.file_name
@@ -11,47 +15,41 @@ module RakeNBake
       SemVer.find
     end
 
-    def self.inc_major
-      v = current_version
-      v.major = v.major.to_i + 1
-      v.minor = 0
-      v.patch = 0
-      v.save
+    def inc_major
+      @version.major = @version.major.to_i + 1
+      @version.minor = 0
+      @version.patch = 0
+      @version.save
     end
 
-    def self.inc_minor
-      v = current_version
-      v.minor = v.minor.to_i + 1
-      v.patch = 0
-      v.save
+    def inc_minor
+      @version.minor = @version.minor.to_i + 1
+      @version.patch = 0
+      @version.save
     end
 
-    def self.inc_patch
-      v = current_version
-      v.patch = v.patch.to_i + 1
-      v.save
+    def inc_patch
+      @version.patch = @version.patch.to_i + 1
+      @version.save
     end
 
-    def self.prerelease s
-      v = current_version
-      v.special = s
-      v.save
+    def prerelease s
+      @version.special = s
+      @version.save
     end
 
-    def self.inc_prerelease s
+    def inc_prerelease s
       inc_major
-      v = current_version
-      v.special = s
-      v.save
+      @version.special = s
+      @version.save
     end
 
-    def self.release
-      v = current_version
-      v.special = ''
-      v.save
+    def release
+      @version.special = ''
+      @version.save
     end
 
-    def self.update_history_file
+    def update_history_file
       %w[history.rdoc CHANGELOG.md]
         .select { |file| File.exist? file }
         .each do |file|
@@ -60,7 +58,7 @@ module RakeNBake
         end
     end
 
-    def self.update_version_rb
+    def update_version_rb
       version_files = Dir.glob('lib{,/*}/version.rb').uniq
       return unless version_files.size == 1
       version_file = version_files[0]
@@ -73,14 +71,14 @@ module RakeNBake
       `git add #{version_file}`
     end
 
-    def self.tag
+    def tag
       v = current_version.to_s
       `git add .semver && git commit -m 'Increment version to #{v}' && git tag #{v} -a -m '#{Time.now}'`
       branch = `git symbolic-ref HEAD`[%r[.*/(.*)], 1]
       puts "To push the new tag, use 'git push origin #{branch} --tags'"
     end
 
-    def self.add_version_to_top filepath
+    def add_version_to_top filepath
       heading_marker = (filepath =~ /rdoc$/) ? '==' : '##'
       current_history = File.read filepath
       File.open filepath, 'w' do |f|

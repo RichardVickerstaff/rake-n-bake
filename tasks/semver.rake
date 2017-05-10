@@ -4,50 +4,54 @@ begin
   namespace :bake do
     namespace :semver do
 
+      def versioner
+        @versioner ||= RakeNBake::SemverVersioning.new
+      end
+
       desc "Display the latest version (from .semver)"
       task :version do
-        puts RakeNBake::SemverVersioning.current_version
+        puts versioner.current_version
       end
 
       desc 'Increment major version in .semver (eg 1.2.3 => 2.0.0)'
       task :major do
-        RakeNBake::SemverVersioning.inc_major
-        RakeNBake::SemverVersioning.update_history_file
-        RakeNBake::SemverVersioning.update_version_rb
-        RakeNBake::SemverVersioning.tag
+        versioner.inc_major
+        versioner.update_history_file
+        versioner.update_version_rb
+        versioner.tag
       end
 
       desc 'Increment minor version in .semver (eg 1.2.3 => 1.3.0)'
       task :minor do
-        RakeNBake::SemverVersioning.inc_minor
-        RakeNBake::SemverVersioning.update_history_file
-        RakeNBake::SemverVersioning.update_version_rb
-        RakeNBake::SemverVersioning.tag
+        versioner.inc_minor
+        versioner.update_history_file
+        versioner.update_version_rb
+        versioner.tag
       end
 
       desc 'Increment patch version in .semver (eg 1.2.3 => 1.2.4)'
       task :patch do
-        RakeNBake::SemverVersioning.inc_patch
-        RakeNBake::SemverVersioning.update_history_file
-        RakeNBake::SemverVersioning.update_version_rb
-        RakeNBake::SemverVersioning.tag
+        versioner.inc_patch
+        versioner.update_history_file
+        versioner.update_version_rb
+        versioner.tag
       end
 
       desc 'Add or modify the current prerelease version (eg 1.2.3-rc1 => 1.2.3-rc2)'
       task :prerelease, [:version] do |task, args|
-        version = args[:version] || fail("Invalid usage: rake bake:semver:prerelase['release name']")
-        RakeNBake::SemverVersioning.prerelease version
-        RakeNBake::SemverVersioning.update_history_file
-        RakeNBake::SemverVersioning.update_version_rb
-        RakeNBake::SemverVersioning.tag
+        version_ = args[:version] || fail("Invalid usage: rake bake:semver:prerelase['release name']")
+        versioner.prerelease version
+        versioner.update_history_file
+        versioner.update_version_rb
+        versioner.tag
       end
 
       desc 'Remove prerelease version (eg 1.2.3-rc2 => 1.2.3)'
       task :release do
-        RakeNBake::SemverVersioning.release
-        RakeNBake::SemverVersioning.update_history_file
-        RakeNBake::SemverVersioning.update_version_rb
-        RakeNBake::SemverVersioning.tag
+        versioner.release
+        versioner.update_history_file
+        versioner.update_version_rb
+        versioner.tag
       end
     end
   end
