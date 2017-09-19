@@ -13,7 +13,7 @@ begin
 
   def check_coverage_level_above level
     coverage = SimpleCov.result.covered_percent
-    if coverage >= level
+    if coverage.to_f >= level.to_f
       RakeNBake::Baker.log_passed "Feature coverage is at #{coverage}%"
     else
       RakeNBake::Baker.log_warn "Spec coverage was only #{coverage}%"
@@ -23,7 +23,7 @@ begin
 
   namespace :bake do
     namespace :coverage do
-      COVERAGE_PERCENT = ENV['COVERAGE_PERCENT'] || 100.0
+      COVERAGE_PERCENT = ENV['COVERAGE_PERCENT'].to_f || 100.0
 
       desc 'Check coverage from RSpec'
       task :check_specs do
