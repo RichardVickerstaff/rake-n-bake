@@ -1,3 +1,7 @@
+== v2.1.1 (19 September 2017)
+
+* Ensure coverage check compates floats
+
 == v2.1.0 (25 November 2016)
 
 * Add Terminal Notifier OK task (bake:ok_term_notifier)
