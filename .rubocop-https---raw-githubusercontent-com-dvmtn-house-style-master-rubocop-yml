@@ -3,6 +3,7 @@ AllCops:
     - '**/Rakefile'
     - '**/config.ru'
   Exclude:
+    - 'ansible/**/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
@@ -12,11 +13,26 @@ AllCops:
     - 'log/**/*'
     - 'node_modules/**/*'
 
-Style/AlignHash:
+
+#############################################
+# Layout
+#
+
+Layout/AlignHash:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
   EnforcedLastArgumentHashStyle: ignore_implicit
   SupportedLastArgumentHashStyles: ignore_implicit
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+
+Layout/SpaceBeforeBlockBraces:
+  Enabled: false
+
+#############################################
+# Style
+#
 
 Style/DefWithParentheses:
   Enabled: false
@@ -40,13 +56,13 @@ Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     '%': '""'
     '%i': '[]'
-    '%q': '[]'
-    '%Q': '[]'
-    '%r': '[]'
+    '%q': "''"
+    '%Q': '""'
+    '%r': '()'
     '%s': '[]'
     '%w': '[]'
     '%W': '[]'
-    '%x': '[]'
+    '%x': '()'
 
 Style/PredicateName:
   NamePrefixBlacklist:
@@ -60,14 +76,44 @@ Style/PredicateName:
 Style/SignalException:
   EnforcedStyle: only_raise
 
-Style/EmptyLinesAroundClassBody:
-  EnforcedStyle: empty_lines
-
 Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
+
+Style/VariableNumber:
+  EnforcedStyle: snake_case
+
+Style/VariableName:
+  Enabled: true
+
+Style/FileName:
+  Exclude:
+    - 'Gemfile'
+    - 'Guardfile'
+
+#############################################
+# Metrics
+#
 
 Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
   Max: 140
   AllowURI: true
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+    - 'spec/**/*_spec.rb'
+    - 'spec/factories/**/*.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/support/shared_examples/*.rb'
+
+#############################################
+# Security
+#
+
+Security/Eval:
+  Enabled: true
+
+Security/MarshalLoad:
+  Enabled: true
