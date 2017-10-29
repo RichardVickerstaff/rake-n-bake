@@ -23,7 +23,7 @@ begin
 
   namespace :bake do
     namespace :coverage do
-      COVERAGE_PERCENT = ENV['COVERAGE_PERCENT'].to_f || 100.0
+      COVERAGE_PERCENT = (ENV['COVERAGE_PERCENT'] || 100.0).to_f
 
       desc 'Check coverage from RSpec'
       task :check_specs do
