@@ -3,7 +3,10 @@ if defined? Rails
     require 'traceroute'
 
     namespace :bake do
-      Rake::Task["traceroute"].invoke
+      task :traceroute do
+        RakeNBake::Baker.log_step 'Running Traceroute'
+        Rake::Task['traceroute'].invoke
+      end
     end
 
   rescue LoadError
