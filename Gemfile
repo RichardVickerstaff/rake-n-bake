@@ -11,7 +11,6 @@ group :development, :test do
   gem 'fasterer'
   gem 'guard-bundler'
   gem 'guard-rspec'
-  gem 'metric_fu'
   gem 'rake'
   gem 'rspec'
   gem 'rubocop'
