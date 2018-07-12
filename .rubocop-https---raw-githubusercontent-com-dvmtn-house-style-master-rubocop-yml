@@ -1,3 +1,8 @@
+inherit_mode:
+  merge:
+    - Exclude
+    - Include
+
 AllCops:
   Include:
     - '**/Rakefile'
@@ -26,6 +31,9 @@ Layout/AlignHash:
 
 Layout/EmptyLinesAroundClassBody:
   EnforcedStyle: empty_lines
+
+Layout/EmptyLinesAroundModuleBody:
+  EnforcedStyle: empty_lines_except_namespace
 
 Layout/SpaceBeforeBlockBraces:
   Enabled: false
@@ -64,7 +72,23 @@ Style/PercentLiteralDelimiters:
     '%W': '[]'
     '%x': '()'
 
-Style/PredicateName:
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+
+#############################################
+# Naming
+#
+
+Naming/PredicateName:
   NamePrefixBlacklist:
     - is_
     - has_
@@ -73,40 +97,37 @@ Style/PredicateName:
     - a_
     - should_
 
-Style/SignalException:
-  EnforcedStyle: only_raise
-
-Style/TrailingCommaInLiteral:
-  EnforcedStyleForMultiline: comma
-
-Style/VariableNumber:
+Naming/VariableNumber:
   EnforcedStyle: snake_case
 
-Style/VariableName:
+Naming/VariableName:
   Enabled: true
 
-Style/FileName:
+Naming/FileName:
   Exclude:
     - 'Gemfile'
     - 'Guardfile'
 
+Lint/AssignmentInCondition:
+  Enabled: true
+  AllowSafeAssignment: false
+
 #############################################
 # Metrics
 #
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/factories/**/*.rb'
+    - 'spec/support/shared_examples/*.rb'
 
 Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
   Max: 140
   AllowURI: true
-
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*_spec.rb'
-    - 'spec/**/*_spec.rb'
-    - 'spec/factories/**/*.rb'
-    - 'spec/spec_helper.rb'
-    - 'spec/support/shared_examples/*.rb'
 
 #############################################
 # Security

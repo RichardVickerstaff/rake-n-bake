@@ -15,6 +15,6 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($/)
   spec.require_paths = ["lib","tasks"]
 
-  spec.add_runtime_dependency "rake", ">= 10"
+  spec.add_runtime_dependency "rake", ">= 11"
   spec.add_runtime_dependency "term-ansicolor", "~> 1.3"
 end
