@@ -1,3 +1,3 @@
 module RakeNBake
-  VERSION = '2.1.4'.freeze
+  VERSION = '3.0.0'.freeze
 end
