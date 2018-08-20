@@ -110,6 +110,10 @@ Runs the [RubyCritic](https://github.com/whitesmith/rubycritic) tool and generat
 ### :traceroute
 Runs [Traceroute](https://rubygems.org/gems/traceroute), a tool for finding unused routes within [Rails](http://rubyonrails.org/) apps
 
+### :yarn
+#### :check
+Runs the yarn integrity check [Yarn](https://yarnpkg.com/lang/en/docs/cli/check/)
+
 Handy Tips for new tasks
 ------------------------
 - All tasks loaded by `lib/rake_n_bake.rb` will have access to the `RakeNBake::Baker`. This is intended for truely common things, like logging out when a particular step runs or passes.
