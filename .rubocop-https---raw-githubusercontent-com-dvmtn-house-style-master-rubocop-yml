@@ -38,6 +38,9 @@ Layout/EmptyLinesAroundModuleBody:
 Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 #############################################
 # Style
 #
