@@ -3,5 +3,6 @@ inherit_from:
   - 'https://raw.githubusercontent.com/dvmtn/house_style/master/rubocop.yml'
 
 AllCops:
+  TargetRubyVersion: 2.3.5
   Exclude:
     - 'lib/rake-n-bake.rb'
