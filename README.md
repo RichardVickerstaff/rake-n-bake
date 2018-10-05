@@ -113,6 +113,8 @@ Runs [Traceroute](https://rubygems.org/gems/traceroute), a tool for finding unus
 ### :yarn
 #### :check
 Runs the yarn integrity check [Yarn](https://yarnpkg.com/lang/en/docs/cli/check/)
+#### :test
+Runs the yarn test
 
 Handy Tips for new tasks
 ------------------------
