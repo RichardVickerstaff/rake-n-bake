@@ -1,3 +1,5 @@
+== v3.1.2 (10 July 2019)
+
 == v3.1.1 (05 October 2018)
 
 * Add 'yarn:test' task
