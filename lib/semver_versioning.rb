@@ -66,7 +66,7 @@ module RakeNBake
       version_file = version_files[0]
 
       version = current_version.to_s.sub(/^v/, '')
-      version_string = "VERSION = '#{version}'.freeze"
+      version_string = "VERSION = '#{version}'"
       version_file_content = File.read(version_file).sub(/VERSION = .*$/, version_string)
 
       File.write(version_file, version_file_content)
